@@ -1,4 +1,6 @@
-CREATE DATABASE ecare;
+CREATE DATABASE IF NOT EXISTS ecare;
+
+USE ecare;
 
 -- USERS TABLE
 CREATE TABLE users (
@@ -7,9 +9,11 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'doctor', 'patient') NOT NULL,
     full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
+    email VARCHAR(150),
     phone VARCHAR(20),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_login DATETIME
 );
 
 -- APPOINTMENTS TABLE
@@ -20,8 +24,8 @@ CREATE TABLE appointments (
     scheduled_date DATETIME NOT NULL,
     reason TEXT,
     status ENUM('pending', 'approved', 'cancelled', 'completed') DEFAULT 'pending',
-    FOREIGN KEY (patient_id) REFERENCES users(id),
-    FOREIGN KEY (doctor_id) REFERENCES users(id)
+    FOREIGN KEY (patient_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- MEDICAL RECORDS TABLE
@@ -29,11 +33,11 @@ CREATE TABLE medical_records (
     id INT PRIMARY KEY AUTO_INCREMENT,
     patient_id INT NOT NULL,
     doctor_id INT NOT NULL,
-    diagnosis TEXT NOT NULL,
+    diagnosis TEXT,
     treatment TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES users(id),
-    FOREIGN KEY (doctor_id) REFERENCES users(id)
+    FOREIGN KEY (patient_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- PRESCRIPTIONS TABLE
@@ -42,7 +46,7 @@ CREATE TABLE prescriptions (
     record_id INT NOT NULL,
     medicine_name VARCHAR(255) NOT NULL,
     dosage VARCHAR(255),
-    FOREIGN KEY (record_id) REFERENCES medical_records(id)
+    FOREIGN KEY (record_id) REFERENCES medical_records(id) ON DELETE CASCADE
 );
 
 -- BILLING TABLE
@@ -52,14 +56,14 @@ CREATE TABLE billing (
     amount DECIMAL(10,2) NOT NULL,
     status ENUM('unpaid', 'paid') DEFAULT 'unpaid',
     issued_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES users(id)
+    FOREIGN KEY (patient_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- INVENTORY TABLE
 CREATE TABLE inventory (
     id INT PRIMARY KEY AUTO_INCREMENT,
     item_name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL DEFAULT 0,
+    quantity INT DEFAULT 0,
     description TEXT,
-    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
 );
