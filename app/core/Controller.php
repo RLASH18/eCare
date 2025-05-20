@@ -33,8 +33,18 @@ class Controller {
      */
     public function model($model) {
         // I-load ang model file mula sa model directory
-        require_once '../app/model/' . $model . '.php';
+        require_once '../app/models/' . $model . '.php';
         // I-return ang bagong instance ng model
         return new $model();
+    }
+
+    public function view($view, $data = []) {
+        if(file_exists('../app/views/' . $view . '.php')) {
+            require_once '../app/views/' . $view . '.php';
+        }
+
+        else {
+            die('Views does not exist');
+        }
     }
 }

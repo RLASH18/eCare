@@ -42,13 +42,14 @@ class App {
 
         // I-check kung existing ang requested controller sa controllers directory
         // Kung existing, gamitin ito; kung hindi, gamitin ang default controller
-        if(file_exists('../app/controller/' . $url[0] . '.php')) {
-            $this->controller = $url[0];  // I-set ang controller name mula sa URL
+        // Maglagay ng Controller name sa dulo Para mabasa nya like HomeController
+        if(file_exists('../app/controllers/' . ucfirst($url[0]) . 'Controller.php')) {
+            $this->controller = ucfirst($url[0]) . 'Controller';  // I-set ang controller name mula sa URL
             unset($url[0]);              // Tanggalin ang controller sa URL array para sa parameter processing
         }
 
         // I-load ang controller file - dapat ito ay existing dahil may default controller tayo
-        require_once '../app/controller/' . $this->controller . '.php';
+        require_once '../app/controllers/' . $this->controller . '.php';
 
         // Gumawa ng instance ng controller class
         $this->controller = new $this->controller;

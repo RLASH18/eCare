@@ -3,7 +3,6 @@
 class HomeController extends Controller{
 
     public function index() {
-
-        echo 'ryan';
+        $this->view('home/home');
     }
 }
