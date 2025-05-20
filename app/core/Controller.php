@@ -38,11 +38,25 @@ class Controller {
         return new $model();
     }
 
+    /**
+     * View Loader
+     * 
+     * Ang method na ito ang responsable sa pag-load ng view files.
+     * Ginagamit ito para ipakita ang user interface ng application.
+     * 
+     * @param string $view - Ang path ng view file na gusto mong i-load (e.g., 'home/index', 'users/profile')
+     * @param array $data - Ang data na ipapasa sa view (optional)
+     * 
+     * Example:
+     * $this->view('home/index', ['title' => 'Home Page']);
+     */
     public function view($view, $data = []) {
+        // I-check kung existing ang view file
         if(file_exists('../app/views/' . $view . '.php')) {
+            // I-load ang view file
             require_once '../app/views/' . $view . '.php';
         }
-
+        // Kung hindi existing ang view file, ipakita ang error message
         else {
             die('Views does not exist');
         }
