@@ -24,6 +24,16 @@ class Database {
     protected $conn;
 
     /**
+     * Statement property - Temporary storage ng prepared SQL statement
+     * 
+     * Ang property na ito ay:
+     * 1. Nag-iimbak ng prepared SQL statement
+     * 2. Ginagamit para sa execution at fetching ng data
+     * 3. Accessible sa lahat ng query methods
+     */
+    protected $stmt;
+
+    /**
      * Constructor - Ina-initialize ang database connection
      * 
      * Ang constructor ay:
@@ -42,6 +52,63 @@ class Database {
             // Kung may error, ipakita ang error message at i-stop ang execution
             die("Connection failed: " . $e->getMessage());
         }
+    }
+
+    /**
+     * Query Method - Naghahanda ng SQL query
+     * 
+     * Ang method na ito ay:
+     * 1. Naghahanda ng SQL statement gamit ang PDO prepare
+     * 2. Iniimbak ang prepared statement sa $stmt property
+     */
+    public function query($sql) {
+        $this->stmt = $this->conn->prepare($sql);
+    }
+
+    /**
+     * Execute Method - Isinasagawa ang prepared query
+     * 
+     * Ang method na ito ay:
+     * 1. Isinasagawa ang prepared SQL statement
+     * 2. Nagbabalik ng true kung successful, false kung may error
+     */
+    public function execute() {
+        return $this->stmt->execute();
+    }
+
+    /**
+     * Result Method - Kumukuha ng isang row ng data
+     * 
+     * Ang method na ito ay:
+     * 1. Isinasagawa ang query
+     * 2. Nagbabalik ng isang row ng data bilang associative array
+     */
+    public function result() {
+        $this->execute();
+        return $this->stmt->fetch();
+    }
+
+    /**
+     * ResultSet Method - Kumukuha ng lahat ng rows ng data
+     * 
+     * Ang method na ito ay:
+     * 1. Isinasagawa ang query
+     * 2. Nagbabalik ng lahat ng rows bilang array ng associative arrays
+     */
+    public function resultSet() {
+        $this->execute();
+        return $this->stmt->fetchAll();
+    }
+
+    /**
+     * RowCount Method - Binibilang ang number ng affected rows
+     * 
+     * Ang method na ito ay:
+     * 1. Nagbabalik ng bilang ng rows na naapektuhan ng query
+     * 2. Useful para sa INSERT, UPDATE, at DELETE operations
+     */
+    public function rowCount() {
+        return $this->stmt->rowCount();
     }
 
 }
