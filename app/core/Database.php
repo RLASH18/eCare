@@ -111,4 +111,30 @@ class Database {
         return $this->stmt->rowCount();
     }
 
+    /**
+     * Bind Method – Nag-uugnay ng isang halaga sa isang parameter sa prepared statement.
+     * 
+     * Ang method na ito ay:
+     * 1. Nagbi-bind ng value sa prepared statement parameter
+     * 2. Ginagamit para sa secure na parameter handling
+     */
+    public function bind($param, $value, $type = null) {
+        if(is_null($type)) {
+            switch(true) {
+                case is_int($value):
+                    $type = PDO::PARAM_INT;
+                    break;
+                case is_bool($value):
+                    $type = PDO::PARAM_BOOL;
+                    break;
+                case is_null($value):
+                    $type = PDO::PARAM_NULL;
+                    break;
+                default:
+                    $type = PDO::PARAM_STR;
+            }
+        }
+        $this->stmt->bindValue($param, $value, $type);
+    }
+
 }
