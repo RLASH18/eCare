@@ -13,4 +13,4 @@ define('DB_PASS', '');           // Password ng database
 // - Redirects
 // - Loading ng assets (CSS, JS, images)
 // Example: http://localhost/eCare
-define('URLROOT', 'http://localhost/eCare');
+define('URL_ROOT', 'http://localhost/eCare');
