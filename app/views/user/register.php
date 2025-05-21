@@ -23,7 +23,7 @@
         <input type="number" name="phone">
         <label for="role">Role</label>
         <select name="role" id="role">
-            <option value="" disabled selected></option>
+            <option value="" disabled selected>Select Role</option>
             <option value="admin">Admin</option>
             <option value="doctor">Doctor</option>
             <option value="patient">Patient</option>
