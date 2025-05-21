@@ -17,7 +17,38 @@
  * }
  */
 class Controller {
-    
+
+    /**
+     * Constructor ng Base Controller
+     * 
+     * Ang constructor na ito ay:
+     * 1. Tinitiyak na naka-start ang session para sa lahat ng controllers
+     * 2. Ginagamit ng lahat ng controllers na naka-extend sa Controller class
+     * 3. Importanteng i-call ito sa child controllers gamit ang parent::__construct()
+     * 
+     * Bakit kailangan ito?
+     * - Para ma-handle ang user sessions sa buong application
+     * - Para ma-maintain ang user login state
+     * - Para ma-access ang session variables sa lahat ng controllers
+     * 
+     * Paano ito gumagana:
+     * 1. Tinitignan kung may active na session
+     * 2. Kung wala, mag-start ng bagong session
+     * 3. Kung meron na, gamitin ang existing session
+     * 
+     * Security Features:
+     * - Automatic session handling
+     * - Consistent session management sa lahat ng controllers
+     * - Prevention ng session-related errors
+     */
+
+    public function __construct() {
+        // Tinitignan kung may active na session, kung wala, mag-start ng bago
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
     /**
      * Model Loader
      * 

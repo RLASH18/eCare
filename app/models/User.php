@@ -14,9 +14,9 @@ class User {
     public function findUserByEmailOrUsername($login) {
         // SQL query para hanapin ang user sa database
         // Hinahanap kung may match sa email O username
-        $this->db->query("SELECT * FROM users WHERE email = :login OR username = :login");
+        $this->db->query("SELECT * FROM users WHERE email = :user_input OR username = :user_input");
         // I-bind ang login parameter para sa security
-        $this->db->bind(':login', $login);
+        $this->db->bind(':user_input', $login);
 
         // Kunin ang resulta ng query
         $row = $this->db->result();

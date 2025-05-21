@@ -45,7 +45,6 @@ class Database {
         try {
             // Gumawa ng bagong PDO connection
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->user, $this->pass);
-            echo "connected successfully";  // Ipakita ang success message
         }
 
         catch (PDOException $e) {
