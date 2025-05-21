@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="login-container container flex h-screen items-center justify-center">
+    <div class="flex min-h-screen items-center justify-center">
         <div class="form-container w-96 p-6">
             <div class="form-header">
                 <h1 class="login-text font-bold">Login</h1>
