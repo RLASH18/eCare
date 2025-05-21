@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Login Page */
+
+.login-text {
+    font-size:x-large;
+}
+
+.form-container {
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-header h1 {
+    text-align: center;
+    margin: 20px;
+}
+
+.username-container, .email-container, .password-container{
+    position: relative;
+    padding: 10px;
+}
+
+.username-container input, .email-container input , .password-container input{
+    padding-left: 25px;
+    padding-block: 10px;
+    border-radius: 10px;
+}
+
+.username-container, .email-container , .password-container{
+    border-radius: 6px;
+    
+}
+
+.username-container img, .email-container img, .password-container img {
+    position: absolute;
+    margin-top: 13px;
+    margin-left: 4px;
+}
+
+.remember-forgot-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.line-design {
+    display: flex;
+    flex-direction: row;
+}
+
+.line-design::before, .line-design::after {
+    content:"";
+    flex: 1 1;
+    border-bottom: 2px solid gray;
+    margin: auto;
+}
+
+.line-design span {
+    display: inline-block;
+    padding: 4px;
+}
+
+.login-button {
+    border-radius: 18px;
+    background-color: rgb(8, 70, 64);
+    color: white;
+    font-weight: bold;
+    padding: 6px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+    background-color: rgb(6, 59, 54);
+}
+
+.signUp-button {
+    border-radius: 18px;
+    background-color: rgb(214, 208, 208);
+    padding: 6px;
+}
+
+.signUp-button:hover {
+    cursor: pointer;
+    background-color: rgb(179, 170, 170);
+}
+
+.login-button-container, .signUp-button-container {
+    display: flex;
+    justify-content: center;
+    margin-block: 10px;
+}
+
+.remember-forgot-container a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color:rgb(8, 70, 64);
+}
+
+.sign-up-message-container {
+    margin: 0 auto;
+}
+
+.input-container input {
+    background-color: rgb(214, 208, 208);
+}
+
+.remember-message {
+    display: inline-block;
+    padding-left: 5px;
+}
