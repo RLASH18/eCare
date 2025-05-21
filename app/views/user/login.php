@@ -25,7 +25,7 @@
                     <input type="password" name="password" class="w-full bg-gray-300" placeholder="Password" >
                 </div>
                 <div class="remember-forgot-container">
-                    <div class="radio-remember"><input type="radio"><span class="remember-message">Remember Me</span></div>
+                    <div class="radio-remember"><input type="checkbox"><span class="remember-message">Remember Me</span></div>
                     <a href="#">Forgot Password?</a>
                 </div>
                 <div class="login-button-container">
