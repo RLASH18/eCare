@@ -10,19 +10,19 @@
 <body>
     <form action="<?= URL_ROOT; ?>/user/register" method="POST">
         <label for="username">Username</label>
-        <input type="text" name="username">
+        <input type="text" name="username" required>
         <label for="password">Password</label>
-        <input type="password" name="password">
+        <input type="password" name="password" required>
         <label for="confirm_password">Confirm password</label>
-        <input type="password" name="confirm_password">
+        <input type="password" name="confirm_password" required>
         <label for="full_name">full name</label>
-        <input type="text" name="full_name">
+        <input type="text" name="full_name" required>
         <label for="email">Email</label>
-        <input type="email" name="email">
+        <input type="email" name="email" required>
         <label for="phone">Phone number</label>
-        <input type="number" name="phone">
+        <input type="number" name="phone" required>
         <label for="role">Role</label>
-        <select name="role" id="role">
+        <select name="role" id="role" required>
             <option value="" disabled selected>Select Role</option>
             <option value="admin">Admin</option>
             <option value="doctor">Doctor</option>
