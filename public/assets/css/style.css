@@ -28,7 +28,7 @@
 }
 
 .username-container input, .email-container input , .password-container input{
-    padding-left: 25px;
+    padding-left: 38px;
     padding-block: 10px;
     border-radius: 10px;
 }
@@ -41,7 +41,7 @@
 .username-container img, .email-container img, .password-container img {
     position: absolute;
     margin-top: 13px;
-    margin-left: 4px;
+    margin-left: 10px;
 }
 
 .remember-forgot-container {
