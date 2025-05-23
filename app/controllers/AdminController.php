@@ -32,6 +32,16 @@ class AdminController extends Controller {
 
     //Default view
     public function index() {
-        $this->view('admin/dashboard');
+
+         // Get dashboard statistics
+        $data = [
+            'totalUsers' => $this->adminModel->getTotalUsers(),
+            'totalDoctors' => $this->adminModel->getTotalDoctors(),
+            'totalPatients' => $this->adminModel->getTotalPatients(),
+            'totalRevenue' => $this->adminModel->getTotalRevenue(),
+            'recentRegistrations' => $this->adminModel->getRecentRegistrations()
+        ];
+
+        $this->view('admin/dashboard', $data);
     }
 }
