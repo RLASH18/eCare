@@ -5,7 +5,7 @@
 define('DB_HOST', 'localhost');  // Database host (usually localhost)
 define('DB_NAME', 'ecare');      // Pangalan ng database mo
 define('DB_USER', 'root');       // Username ng database
-define('DB_PASS', 'admin');           // Password ng database
+define('DB_PASS', '');           // Password ng database
 
 // URL Root
 // Ito ang base URL ng website mo

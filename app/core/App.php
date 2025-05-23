@@ -54,11 +54,61 @@ class App {
         // Gumawa ng instance ng controller class
         $this->controller = new $this->controller;
 
+        /**
+         * Original URL Method Handler (Naka-comment out)
+         * 
+         * Ito ang original na logic para sa pag-handle ng URL methods.
+         * Ginagamit ito kung ang mga method names mo ay walang hyphen o dash.
+         * 
+         * Paano ito gumagana:
+         * 1. Tinitignan kung may method na tinukoy sa URL (url[1])
+         * 2. Tinitignan kung existing ang method name sa controller
+         * 3. Kung existing, ginagamit ito; kung hindi, ginagamit ang default method
+         * 
+         * Halimbawa ng URL na compatible dito:
+         * - /admin/dashboard
+         * - /admin/appointments
+         * - /admin/billing
+         * 
+         * Hindi compatible ang mga URL na may hyphen tulad ng:
+         * - /admin/user-management
+         * - /admin/medical-records
+         * 
+         * Note: Naka-comment out ito para sa reference lang.
+         * Kung gusto mong bumalik sa original na routing, i-uncomment mo lang ito
+         * at i-comment out ang bagong routing logic sa ibaba.
+         * 
         // I-check kung may method na tinukoy sa URL at kung existing ito sa controller
         // Kung valid, gamitin ito; kung hindi, gamitin ang default method
         if(isset($url[1]) AND method_exists($this->controller, $url[1])) {
             $this->method = $url[1];    // I-set ang method name mula sa URL
             unset($url[1]);             // Tanggalin ang method sa URL array para sa parameter processing
+        }
+         */
+        
+        /**
+         * Modified URL Method Handler
+         * 
+         * Ito ang bagong logic para sa pag-handle ng URL methods na may hyphen.
+         * Ginagawa nitong compatible ang URL na may hyphen (e.g., user-management) 
+         * sa PHP method names na camelCase (e.g., userManagement).
+         * 
+         * Paano ito gumagana:
+         * 1. Tinitignan kung may method na tinukoy sa URL (url[1])
+         * 2. Kung meron, ginagawang camelCase ang method name gamit ang hyphenToCamelCase
+         * 3. Tinitignan kung existing ang converted method name sa controller
+         * 4. Kung existing, ginagamit ito; kung hindi, ginagamit ang default method
+         * 
+         * Halimbawa:
+         * URL: /admin/user-management
+         * Magiging: userManagement (camelCase) para sa method name
+         */
+        if(isset($url[1])) {
+            $method = $this->hyphenToCamelCase($url[1]);
+            if(method_exists($this->controller, $method)) {
+                $this->method = $method;
+                unset($url[1]);
+            }
         }
 
         // I-set ang parameters array sa mga natitirang URL segments
@@ -87,5 +137,31 @@ class App {
         }
 
         return ['home'];  // I-return ang default route kung walang URL na provided
+    }
+
+    /**
+     * Hyphen to CamelCase Converter
+     * 
+     * Ang method na ito ang nagko-convert ng hyphenated strings (e.g., user-management)
+     * papunta sa camelCase format (e.g., userManagement) na compatible sa PHP method names.
+     * 
+     * Paano ito gumagana:
+     * 1. Pinapalitan ang mga hyphen (-) ng spaces
+     * 2. Ginagawang uppercase ang unang letter ng bawat word (ucwords)
+     * 3. Tinatanggal ang spaces sa pagitan ng words
+     * 4. Ginagawang lowercase ang unang letter ng buong string (lcfirst)
+     * 
+     * @param string $string Ang string na may hyphen na gusto mong i-convert
+     * @return string Ang converted string sa camelCase format
+     * 
+     * Halimbawa:
+     * Input: 'user-management'
+     * Output: 'userManagement'
+     * 
+     * Input: 'medical-records'
+     * Output: 'medicalRecords'
+     */
+    private function hyphenToCamelCase($string) {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $string))));
     }
 }

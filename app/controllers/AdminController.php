@@ -44,4 +44,28 @@ class AdminController extends Controller {
 
         $this->view('admin/dashboard', $data);
     }
+
+    public function userManagement() {
+        $this->view('admin/user-management');
+    }
+
+    public function appointments() {
+        $this->view('admin/appointments');
+    }
+
+    public function medicalRecords() {
+        $this->view('admin/medical-records');
+    }
+
+    public function prescriptions() {
+        $this->view('admin/prescriptions');
+    }
+
+    public function billing() {
+        $this->view('admin/billing');
+    }
+
+    public function inventory() {
+        $this->view('admin/inventory');
+    }
 }
