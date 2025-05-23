@@ -7,7 +7,6 @@
  * Ito ang controller na responsible sa pag-manage ng admin dashboard at iba pang admin features.
  * 
  * Features:
- * - Admin authentication at authorization
  * - Admin dashboard display
  * - Admin-specific operations
  */
