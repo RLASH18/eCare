@@ -84,7 +84,7 @@ class Database {
      */
     public function result() {
         $this->execute();
-        return $this->stmt->fetch();
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -96,7 +96,7 @@ class Database {
      */
     public function resultSet() {
         $this->execute();
-        return $this->stmt->fetchAll();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
