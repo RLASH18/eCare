@@ -15,6 +15,7 @@ require_once '../config.php';
 require_once '../app/core/App.php';        // Main router at bootstrap class
 require_once '../app/core/Controller.php'; // Base controller class
 require_once '../app/core/Database.php';   // Database connection handler
+require_once '../app/helper/FlashMessage.php'; //Message class
 
 // Gumawa ng instance ng App class para simulan ang application
 $app = new App;

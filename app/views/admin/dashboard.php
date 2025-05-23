@@ -9,33 +9,29 @@
 
 <body>
 
-    <div class="dashboard-stats">
-        <div class="stats-card">
-            <h3>Total Users</h3>
-            <h5><?= $data['totalUsers']; ?></h5>
-        </div>
+
+    <div class="stats-card">
+        <h3>Total Users</h3>
+        <h5><?= $data['totalUsers']; ?></h5>
     </div>
 
-    <div class="dashboard-stats">
-        <div class="stats-card">
-            <h3>Total Doctors</h3>
-            <h5><?= $data['totalDoctors']; ?></h5>
-        </div>
+    <div class="stats-card">
+        <h3>Total Doctors</h3>
+        <h5><?= $data['totalDoctors']; ?></h5>
     </div>
 
-    <div class="dashboard-stats">
-        <div class="stats-card">
-            <h3>Total Patients</h3>
-            <h5><?= $data['totalPatients']; ?></h5>
-        </div>
+
+
+    <div class="stats-card">
+        <h3>Total Patients</h3>
+        <h5><?= $data['totalPatients']; ?></h5>
     </div>
 
-    <div class="dashboard-stats">
-        <div class="stats-card">
-            <h3>Total Revenue</h3>
-            <h5><?= $data['totalRevenue']; ?></h5>
-        </div>
+    <div class="stats-card">
+        <h3>Total Revenue</h3>
+        <h5><?= $data['totalRevenue']; ?></h5>
     </div>
+
 
     <div class="div">
         <h3>Recent Registrations</h3>
@@ -60,8 +56,7 @@
         </table>
     </div>
 
-    <a href="<?= URL_ROOT; ?>/user/logout"
-        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+    <a href="<?= URL_ROOT; ?>/user/logout">
         Logout
     </a>
 </body>

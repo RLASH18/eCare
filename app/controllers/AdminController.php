@@ -32,7 +32,13 @@ class AdminController extends Controller {
     //Default view
     public function index() {
 
-         // Get dashboard statistics
+        $this->dashboard();
+
+    }
+
+    public function dashboard() {
+
+        // Get dashboard statistics
         $data = [
             'totalUsers' => $this->adminModel->getTotalUsers(),
             'totalDoctors' => $this->adminModel->getTotalDoctors(),
@@ -42,6 +48,7 @@ class AdminController extends Controller {
         ];
 
         $this->view('admin/dashboard', $data);
+
     }
 
     public function userManagement() {

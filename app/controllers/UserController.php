@@ -20,6 +20,7 @@ class UserController extends Controller {
         if(isset($_SESSION['user_id'])) {
             // Kung meron, i-redirect base sa role ng user
             $this->redirectBasedOnRole($_SESSION['user_role']);
+            exit;
         }
 
         // Kung walang naka-login, ipakita ang login page
@@ -32,6 +33,7 @@ class UserController extends Controller {
         if(isset($_SESSION['user_id'])) {
             // Kung meron, i-redirect base sa role ng user
             $this->redirectBasedOnRole($_SESSION['user_role']);
+            exit;
         }
 
         // Tinitignan kung POST request ba (login attempt)
@@ -43,8 +45,9 @@ class UserController extends Controller {
             // Tinitignan kung may empty fields sa form
             if(empty($login) OR empty($password)) {
                 // Kung may empty, ipakita ang error message sa login page
-                $this->view('user/login', ['error' => 'Please input your Email or Password']);
-                return;
+                FlashMessage::set('error', 'Please input your Username/Email or Password.', 'alert alert-danger');
+                header('Location: ' . URL_ROOT . '/user/login');
+                exit;
             }
 
             // Hanapin ang user sa database gamit ang email/username
@@ -59,13 +62,17 @@ class UserController extends Controller {
                 
                 // I-redirect ang user base sa role nito
                 $this->redirectBasedOnRole($user['role']);
+                exit;
             }
             
             else {
                 // Kung mali ang credentials, ipakita ang error message
-                $this->view('user/login', ['error' => 'Invalid Username or Password']);
+                FlashMessage::set('error', 'Invalid Username/Email or Password.', 'alert alert-danger');
+                header('Location: ' . URL_ROOT . '/user/login');
+                exit;
             }
         }
+
         else {
             // Kung hindi POST request, ipakita lang ang login form
             $this->view('user/login');
@@ -78,6 +85,7 @@ class UserController extends Controller {
         if(isset($_SESSION['user_id'])) {
             // Kung meron, i-redirect base sa role ng user
             $this->redirectBasedOnRole($_SESSION['user_role']);
+            exit;
         }
 
         // Tinitignan kung POST request ba (registration attempt)
@@ -151,8 +159,7 @@ class UserController extends Controller {
                 // I-save ang user data sa database gamit ang register method
                 if($this->userModel->register($data)) {
                     // Kung successful ang registration, mag-set ng flash message
-                    $_SESSION['flash_message'] = 'Registration successful! You can login now';
-                    // I-redirect sa login page
+                    FlashMessage::set('success', 'Registration successful! You can login now', 'alert alert-success');
                     header('Location: ' . URL_ROOT . '/user/login');
                     exit;
                 }
@@ -176,6 +183,7 @@ class UserController extends Controller {
         $_SESSION = array();
 
         // I-destroy ang session completely
+        session_unset();
         session_destroy();
 
         // I-redirect sa login page pagkatapos mag-logout
