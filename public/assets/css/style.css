@@ -11,6 +11,7 @@
 }
 
 .form-container {
+
     padding: 15px;
     border-radius: 12px;
     border: 2px solid gray;
@@ -113,4 +114,62 @@
 .remember-message {
     display: inline-block;
     padding-left: 5px;
+}
+
+
+/* Register Page */
+
+.fields {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-fields input {
+    background-color: rgb(214, 208, 208);
+    display: flex;
+    flex-direction: column;
+    width: calc(100% / 2 -50px);
+    border-radius: 6px;
+}
+
+form input {
+    background-color: rgb(214,208,208);
+    margin: 10px 0;
+}
+
+.email-phone-container input{
+    margin-left: 10px;
+    border-radius: 6px;
+}
+
+.register-button-container button {
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: rgb(8, 70, 64);
+}
+
+.register-button-container button:hover {
+    cursor: pointer;
+    background-color: rgb(6, 59, 54)
+}
+
+.register-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    
+}
+
+.role-container {
+    margin-top: 10px;
+}
+
+.role-container select {
+    margin-left: 10px;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 12px;
 }
