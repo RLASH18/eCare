@@ -10,26 +10,24 @@
 <body>
 
 
-    <div class="stats-card">
+    <div class="card">
         <h3>Total Users</h3>
-        <h5><?= $data['totalUsers']; ?></h5>
+        <h5><?= $data['totalUsers'] ?></h5>
     </div>
 
-    <div class="stats-card">
+    <div class="card">
         <h3>Total Doctors</h3>
-        <h5><?= $data['totalDoctors']; ?></h5>
+        <h5><?= $data['totalDoctors'] ?></h5>
     </div>
 
-
-
-    <div class="stats-card">
+    <div class="card">
         <h3>Total Patients</h3>
-        <h5><?= $data['totalPatients']; ?></h5>
+        <h5><?= $data['totalPatients'] ?></h5>
     </div>
 
-    <div class="stats-card">
+    <div class="card">
         <h3>Total Revenue</h3>
-        <h5><?= $data['totalRevenue']; ?></h5>
+        <h5>₱ <?= number_format($data['totalRevenue'], 2)?></h5>
     </div>
 
 
@@ -41,6 +39,7 @@
                     <th>Username</th>
                     <th>Full name</th>
                     <th>Role</th>
+                    <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +55,7 @@
         </table>
     </div>
 
-    <a href="<?= URL_ROOT; ?>/user/logout">
+    <a href="<?= URL_ROOT ?>/user/logout">
         Logout
     </a>
 </body>

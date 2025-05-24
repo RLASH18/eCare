@@ -33,4 +33,48 @@ class Admin {
         return $this->db->resultSet();
     }
 
+    public function getAllUsers() {
+        $this->db->query("SELECT * FROM users");
+        return $this->db->resultSet();
+    }
+
+    public function findUserByUsername($username) {
+        $this->db->query("SELECT * FROM users WHERE username = :username");
+        $this->db->bind(':username', $username);
+        
+        return $this->db->result();
+    }
+
+    public function findUserByEmail($email) {
+        $this->db->query("SELECT * FROM users WHERE email = :email");
+        $this->db->bind(':email', $email);
+
+        return $this->db->result();
+    }
+
+    public function addUser($data) {
+        $this->db->query("INSERT INTO users (username, password, full_name, email, phone, role) 
+                        VALUES (:username, :password, :full_name, :email, :phone, :role)");
+        
+        // I-bind ang lahat ng data para sa security
+        $this->db->bind(':username', $data['username']);
+        $this->db->bind(':password', $data['password']);
+        $this->db->bind(':full_name', $data['full_name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':phone', $data['phone']);
+        $this->db->bind(':role', $data['role']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    
+
+
+
 }

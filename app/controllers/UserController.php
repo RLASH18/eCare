@@ -37,7 +37,7 @@ class UserController extends Controller {
         }
 
         // Tinitignan kung POST request ba (login attempt)
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Kinukuha at nililinis ang email/username at password mula sa form
             $login = trim($_POST['user_input']);
             $password = $_POST['password'];
@@ -89,12 +89,12 @@ class UserController extends Controller {
         }
 
         // Tinitignan kung POST request ba (registration attempt)
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Kinukuha at nililinis ang lahat ng input data mula sa registration form
             $data = [
                 'username' => trim($_POST['username']),
                 'password' => $_POST['password'],
-                'confirm_password' => $_POST['password'],
+                'confirm_password' => $_POST['confirm_password'],
                 'full_name' => trim($_POST['full_name']),
                 'email' => trim($_POST['email']),
                 'phone' => trim($_POST['phone']),
@@ -104,12 +104,15 @@ class UserController extends Controller {
                 'confirm_password_err' => '',
                 'full_name_err' => '',
                 'email_err' => '',
-                'phone_err' => ''
+                'phone_err' => '',
+                'role_err' => ''
             ];
 
             // Validation para sa username field
             if(empty($data['username'])) {
                 $data['username_err'] = 'Please enter your username.';
+            } elseif($this->userModel->findUserByEmailOrUsername($data['username'])) {
+                $data['username_err'] = 'Username is already taken.';
             }
 
             // Validation para sa password field
@@ -136,6 +139,8 @@ class UserController extends Controller {
             // Validation para sa email field
             if(empty($data['email'])) {
                 $data['email_err'] = 'Please enter your email';
+            } elseif(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['email_err'] = 'Invalid Email Format';
             } elseif($this->userModel->findUserByEmailOrUsername($data['email'])) {
                 $data['email_err'] = 'Email is already taken.';
             }
@@ -143,6 +148,14 @@ class UserController extends Controller {
             // Validation para sa phone number field
             if(empty($data['phone'])) {
                 $data['phone_err'] = 'Please enter your phone number.';
+            } elseif(!preg_match('/^[0-9]{11}$/', $data['phone'])) {
+                $data['phone_err'] = 'Phone number must be 11 digits.';
+            }
+
+            if(empty($data['role'])) {
+                $data['role_err'] = 'Please select your role.';
+            } elseif(!in_array($data['role'], ['admin', 'doctor', 'patient'])) {
+                $data['role_err'] = 'Invalid role selected.';
             }
 
             // Tinitignan kung walang errors sa lahat ng fields
@@ -151,12 +164,13 @@ class UserController extends Controller {
                 empty($data['confirm_password_err']) AND
                 empty($data['full_name_err']) AND
                 empty($data['email_err']) AND
-                empty($data['phone_err'])) {
+                empty($data['phone_err']) AND 
+                empty($data['role_err'])) {
 
                 // I-encrypt ang password gamit ang password_hash bago i-save sa database
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-                // I-save ang user data sa database gamit ang register method
+                // I-save ang user data sa database gamit ang register methods
                 if($this->userModel->register($data)) {
                     // Kung successful ang registration, mag-set ng flash message
                     FlashMessage::set('success', 'Registration successful! You can login now', 'alert alert-success');
@@ -166,7 +180,8 @@ class UserController extends Controller {
 
                 else {
                     // Kung may error sa pag-save ng data sa database
-                    die('Something went wrong. Please try again');
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+                    $this->view('user/register', $data);
                 }
             }
         }

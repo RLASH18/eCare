@@ -10,18 +10,9 @@
 </head>
 
 <body>
-    <?php
-    //display success message
-    if (FlashMessage::has('success')) {
-        echo FlashMessage::display('success');
-    }
-
-    //display error message
-    if (FlashMessage::has('error')) {
-        echo FlashMessage::display('error');
-    }
-    ?>
-
+    
+    <?php include APP_ROOT . '/views/inc/flash-message.php'?>
+    
     <div class="flex min-h-screen items-center justify-center">
         <div class="form-container w-96 p-6">
             <div class="form-header">

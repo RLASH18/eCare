@@ -8,6 +8,8 @@
 </head>
 
 <body>
+    <?php include APP_ROOT . '/views/inc/flash-message.php'?>
+
     <form action="<?= URL_ROOT; ?>/user/register" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" required>
@@ -20,7 +22,7 @@
         <label for="email">Email</label>
         <input type="email" name="email" required>
         <label for="phone">Phone number</label>
-        <input type="number" name="phone" required>
+        <input type="text" name="phone" required>
         <label for="role">Role</label>
         <select name="role" id="role" required>
             <option value="" disabled selected>Select Role</option>
