@@ -10,7 +10,7 @@
 <body>
     <?php include APP_ROOT . '/views/inc/flash-message.php'?>
     
-    <form action="<?= URL_ROOT; ?>/admin/add-user" method="POST">
+    <form action="<?= URL_ROOT ?>/admin/add-user" method="POST">
 
         <div>
             <label for="username">Username</label>
