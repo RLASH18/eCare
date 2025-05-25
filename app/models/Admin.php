@@ -73,6 +73,49 @@ class Admin {
         }
     }
 
+    public function getUserById($id) {
+        $this->db->query("SELECT * FROM users WHERE id = :id");
+
+        $this->db->bind(':id', $id);
+        return $this->db->result();
+    }
+
+    public function updateUser($data) {
+        //base query without password
+        $sql = ("UPDATE users SET username = :username, full_name = :full_name, email = :email, phone = :phone, role = :role");
+
+        //add password to update if nag exist
+        if(isset($data['password'])) {
+            $sql .= ", password = :password";
+        }
+
+        //add where clause 
+        $sql .= " WHERE id = :id";
+
+        $this->db->query($sql);
+
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':username', $data['username']);
+        $this->db->bind(':full_name', $data['full_name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':phone', $data['phone']);
+        $this->db->bind(':role', $data['role']);
+
+        //bind password if ng exist
+        if(isset($data['password'])) {
+            $this->db->bind('password', $data['password']);
+
+        }
+
+        return $this->db->execute();
+
+    }
+
+    public function deleteUser($id) {
+        $this->db->query("DELETE FROM users WHERE id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
     
 
 

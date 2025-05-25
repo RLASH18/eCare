@@ -12,3 +12,5 @@
 <body>
     
     <?php include APP_ROOT . '/views/inc/flash-message.php'?>
+
+    <!-- Dito na siguro mag include ng sidebar and navbar -->
