@@ -7,6 +7,7 @@ class Admin {
         $this->db = new Database();
     }
 
+    //-----------dashboard infos-----------
     public function getTotalUsers() {
         $this->db->query("SELECT COUNT(*) AS total_users FROM users");
         return $this->db->result()['total_users'];
@@ -32,10 +33,20 @@ class Admin {
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }
+    //-----------end dashboard-----------
 
+
+    //-----------user-management-----------
     public function getAllUsers() {
         $this->db->query("SELECT * FROM users");
         return $this->db->resultSet();
+    }
+
+    public function getUserById($id) {
+        $this->db->query("SELECT * FROM users WHERE id = :id");
+
+        $this->db->bind(':id', $id);
+        return $this->db->result();
     }
 
     public function findUserByUsername($username) {
@@ -71,13 +82,6 @@ class Admin {
         else {
             return false;
         }
-    }
-
-    public function getUserById($id) {
-        $this->db->query("SELECT * FROM users WHERE id = :id");
-
-        $this->db->bind(':id', $id);
-        return $this->db->result();
     }
 
     public function updateUser($data) {
@@ -116,7 +120,9 @@ class Admin {
         $this->db->bind(':id', $id);
         return $this->db->execute();
     }
+    //-----------end user-management-----------
     
+
 
 
 

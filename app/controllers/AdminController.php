@@ -10,14 +10,12 @@
  * - Admin dashboard display
  * - Admin-specific operations
  */
-class AdminController extends Controller
-{
+class AdminController extends Controller {
 
     // Variable para sa user model
     private $adminModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct(); // Tinitiyak na naka-start ang session
 
         // Tinitignan kung may naka-login na user at kung admin ba siya
@@ -42,14 +40,12 @@ class AdminController extends Controller
     }
 
     //Default view
-    public function index()
-    {
+    public function index() {
 
         $this->dashboard();
     }
 
-    public function dashboard()
-    {
+    public function dashboard() {
 
         // Get dashboard statistics
         $data = [
@@ -63,8 +59,7 @@ class AdminController extends Controller
         $this->view('admin/dashboard', $data);
     }
 
-    public function userManagement()
-    {
+    public function userManagement() {
         //shows data
         $data = [
             'users' => $this->adminModel->getAllUsers()
@@ -378,33 +373,26 @@ class AdminController extends Controller
             $this->view('admin/user-control/delete', ['user' => $user]);
 
         }
-
-
     }
 
 
-    public function appointments()
-    {
+    public function appointments() {
         $this->view('admin/appointments');
     }
 
-    public function medicalRecords()
-    {
+    public function medicalRecords() {
         $this->view('admin/medical-records');
     }
 
-    public function prescriptions()
-    {
+    public function prescriptions() {
         $this->view('admin/prescriptions');
     }
 
-    public function billing()
-    {
+    public function billing() {
         $this->view('admin/billing');
     }
 
-    public function inventory()
-    {
+    public function inventory() {
         $this->view('admin/inventory');
     }
 }

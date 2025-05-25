@@ -10,7 +10,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>id</th>
                 <th>Full name</th>
                 <th>Username</th>
                 <th>Email</th>
