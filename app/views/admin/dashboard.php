@@ -3,17 +3,17 @@
 
 <div class="card">
     <h3>Total Users</h3>
-    <h5><?= $data['totalUsers'] ?></h5>
+    <h5><?= htmlspecialchars($data['totalUsers']) ?></h5>
 </div>
 
 <div class="card">
     <h3>Total Doctors</h3>
-    <h5><?= $data['totalDoctors'] ?></h5>
+    <h5><?= htmlspecialchars($data['totalDoctors']) ?></h5>
 </div>
 
 <div class="card">
     <h3>Total Patients</h3>
-    <h5><?= $data['totalPatients'] ?></h5>
+    <h5><?= htmlspecialchars($data['totalPatients']) ?></h5>
 </div>
 
 <div class="card">
