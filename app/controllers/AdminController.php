@@ -28,6 +28,7 @@ class AdminController extends Controller {
         // Ini-initialize ang Admin model para sa database operations
         $this->adminModel = $this->model('Admin');
 
+        //for user management dashboard
         $user = $this->adminModel->getUserById($_SESSION['user_id']);
 
         if(!$user OR $user['role'] !== 'admin') {

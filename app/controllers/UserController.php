@@ -98,7 +98,7 @@ class UserController extends Controller {
                 'full_name' => trim($_POST['full_name']),
                 'email' => trim($_POST['email']),
                 'phone' => trim($_POST['phone']),
-                'role' => 'patient', // Default role ay patient para sa bagong users
+                'role' => trim($_POST['role']), // Default role ay patient para sa bagong users
                 'username_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => '',
@@ -184,11 +184,31 @@ class UserController extends Controller {
                     $this->view('user/register', $data);
                 }
             }
+
+            else {
+                $this->view('user/register', $data);
+
+            }
         }
         
         else {
             // Kung hindi POST request, ipakita lang ang registration form
-            $this->view('user/register');
+            $this->view('user/register', $data = [
+                'username' => '',
+                'password' => '',
+                'confirm_password' => '',
+                'full_name' => '',
+                'email' => '',
+                'phone' => '',
+                'role' => '',
+                'username_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'full_name_err' => '',
+                'email_err' => '',
+                'phone_err' => '',
+                'role_err' => '',
+            ]);
         }
     }
 
