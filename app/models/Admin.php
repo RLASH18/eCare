@@ -123,6 +123,11 @@ class Admin {
     //-----------end user-management-----------
     
 
+    public function getTotalAppointments() {
+        $this->db->query("SELECT * FROM appointments");
+        return $this->db->resultSet();
+    }
+
 
 
 

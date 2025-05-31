@@ -378,7 +378,12 @@ class AdminController extends Controller {
 
 
     public function appointments() {
-        $this->view('admin/appointments');
+
+        $data = [
+            'appointments' => $this->adminModel->getTotalAppointments()
+        ];
+
+        $this->view('admin/appointments', $data);
     }
 
     public function medicalRecords() {
