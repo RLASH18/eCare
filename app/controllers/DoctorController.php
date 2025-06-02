@@ -30,4 +30,43 @@ class DoctorController extends Controller {
 
         $this->view('doctor/dashboard', $data);
     }
+
+    public function appointments() {
+
+        $data = [
+            'appointments' => $this->doctorModel->getAllAppointments()
+        ];
+
+        $this->view('doctor/appointments', $data);
+    }
+
+    public function updateStatus() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $appointmentId = $_POST['appointment_id'];
+            $status = $_POST['status'];
+
+            if(!in_array($status, ['approved', 'cancelled'])) {
+                FlashMessage::set('error', 'Invalid status value.'. 'alert alert-danger');
+                header('Location: ' . URL_ROOT . '/doctor/appointments');
+                exit;
+            }
+
+            if($this->doctorModel->updateAppointmentStatus($appointmentId, $status)) {
+                FlashMessage::set('success', 'Appointment status has been updated successfully.', 'alert alert-success');
+
+            }
+
+            else {
+                FlashMessage::set('error', 'Failed to update appointment status.', 'alert alert-error');
+
+            }
+
+            header('Location: ' . URL_ROOT . '/doctor/appointments');
+                exit;
+        }
+
+        else {
+            $this->view('doctor/appointments');
+        }
+    }
 }

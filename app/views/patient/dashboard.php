@@ -3,12 +3,12 @@
 
 <div class="card">
     <h3>Total Appointment</h3>
-    <h5><?=$data['totalAppointments'] ?></h5>
+    <h5><?= htmlspecialchars($data['totalAppointments']) ?></h5>
 </div>
 
 <div class="card">
     <h3>Total Billing
-        <h5><?= $data['totalBilling'] ?></h5>
+        <h5><?= htmlspecialchars($data['totalBilling']) ?></h5>
     </h3>
 </div>
 
