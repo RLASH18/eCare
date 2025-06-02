@@ -49,24 +49,21 @@ class AdminController extends Controller {
     public function dashboard() {
 
         // Get dashboard statistics
-        $data = [
+        $this->view('admin/dashboard', $data = [
             'totalUsers' => $this->adminModel->getTotalUsers(),
             'totalDoctors' => $this->adminModel->getTotalDoctors(),
             'totalPatients' => $this->adminModel->getTotalPatients(),
             'totalRevenue' => $this->adminModel->getTotalRevenue(),
             'recentRegistrations' => $this->adminModel->getRecentRegistrations()
-        ];
-
-        $this->view('admin/dashboard', $data);
+        ]);
     }
 
     public function userManagement() {
+        
         //shows data
-        $data = [
+        $this->view('admin/user-management', $data = [
             'users' => $this->adminModel->getAllUsers()
-        ];
-
-        $this->view('admin/user-management', $data);
+        ]);
     }
 
     public function addUser() {

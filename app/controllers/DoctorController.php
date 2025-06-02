@@ -22,13 +22,10 @@ class DoctorController extends Controller {
 
     public function dashboard() {
 
-        $data = [
+        $this->view('doctor/dashboard', $data = [
             'totalPatients' => $this->doctorModel->getTotalPatients(),
             'totalAppointments' => $this->doctorModel->getTotalAppointments()
-
-        ];
-
-        $this->view('doctor/dashboard', $data);
+        ]);
     }
 
     public function appointments() {

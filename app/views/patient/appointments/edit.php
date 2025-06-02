@@ -6,9 +6,9 @@
     <input type="hidden" name="id" id="id" value="<?= $data['id'] ?>">
     <div>
         <label for="doctors_name">Doctor's Name</label>
-        <select name="doctor_id" id=""  required>
+        <select name="doctor_id" id="" required>
             <option value="" disabled selected>Choose your doctor</option>
-            <?php foreach($data['doctors'] as $doctor) : ?>
+            <?php foreach ($data['doctors'] as $doctor) : ?>
                 <option value="<?= htmlspecialchars($doctor['id']) ?>"
                     <?= ($doctor['id'] == $data['doctor_id']) ? 'selected' : '' ?>>
                     <?= htmlspecialchars($doctor['full_name']) ?>
@@ -19,7 +19,7 @@
 
     <div>
         <label for="date">Date</label>
-        <input type="date" name="scheduled_date" id="" value="<?= date('Y-m-d', strtotime($data['scheduled_date'])) ?>"  required>
+        <input type="date" name="scheduled_date" id="" value="<?= date('Y-m-d', strtotime($data['scheduled_date'])) ?>" required>
     </div>
 
     <div>
