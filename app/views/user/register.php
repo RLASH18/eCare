@@ -7,15 +7,13 @@
         <form action="<?= URL_ROOT ?>/user/register" method="POST">
             <div class="fields">
                 <div class="input-fields">
-                    <label for="full_name">full name</label>
-                    <input type="text" name="full_name" required>
+                    <input type="text" name="full_name" placeholder="Full name" required>
                     <?php if (!empty($data['full_name_err'])): ?>
                         <p><?= $data['full_name_err'] ?></p>
                     <?php endif ?>
                 </div>
                 <div class="input-fields">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" required>
+                    <input type="text" name="username" placeholder="Username" required>
                     <?php if (!empty($data['username_err'])): ?>
                         <p><?= $data['username_err'] ?></p>
                     <?php endif ?>
@@ -24,16 +22,14 @@
 
             <div class="fields">
                 <div class="input-fields">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password"  required>
                     <?php if (!empty($data['password_err'])): ?>
                         <p><?= $data['password_err'] ?></p>
                     <?php endif ?>
                 </div>
 
                 <div class="input-fields">
-                    <label for="confirm_password">Confirm password</label>
-                    <input type="password" name="confirm_password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                     <?php if (!empty($data['confirm_password_err'])): ?>
                         <p><?= $data['confirm_password_err'] ?></p>
                     <?php endif ?>
@@ -41,23 +37,20 @@
             </div>
 
             <div class="email-phone-container">
-                <label for="email">Email</label>
-                <input type="email" name="email" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <?php if (!empty($data['email_err'])): ?>
                     <p><?= $data['email_err'] ?></p>
                 <?php endif ?>
             </div>
 
             <div class="email-phone-container">
-                <label for="phone">Phone number</label>
-                <input type="text" name="phone" required>
+                <input type="text" name="phone" placeholder="Phone" required>
                 <?php if (!empty($data['phone_err'])): ?>
                     <p><?= $data['phone_err'] ?></p>
                 <?php endif ?>
             </div>
 
             <div class="role-container">
-                <label for="role">Role</label>
                 <select name="role" id="role" required>
                     <option value="" disabled selected>Select Role</option>
                     <option value="admin">Admin</option>
@@ -69,7 +62,16 @@
             <div class="register-button-container">
                 <button class="w-48" type="submit">Register</button>
             </div>
+
+            <h2 class="line-design"><span>Or</span></h2>
+
+            <div class="signIn-button-container">
+                <a class="signIn-button w-48 text-center" href="<?= URL_ROOT ?>/user/login">Sign In</a>
+            </div>
         </form>
+        <div class="sign-in-message-container w-60 text-xs">
+            <div class="sign-in-message">Already have an account? Login your account here.</div>
+        </div>
     </div>
 </div>
 

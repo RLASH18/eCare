@@ -145,9 +145,11 @@ form input {
 
 .register-button-container button {
     color: white;
-    padding: 10px;
-    border-radius: 16px;
+    padding: 6px;
+    border-radius: 18px;
     background-color: rgb(8, 70, 64);
+    font-weight: bold;
+
 }
 
 .register-button-container button:hover {
@@ -172,4 +174,25 @@ form input {
     border: 1px solid gray;
     padding: 5px;
     border-radius: 12px;
+}
+
+.signIn-button {
+    border-radius: 18px;
+    background-color: rgb(214, 208, 208);
+    padding: 6px;
+}
+
+.signIn-button:hover {
+    cursor: pointer;
+    background-color: rgb(179, 170, 170);
+}
+
+.login-button-container, .signIn-button-container {
+    display: flex;
+    justify-content: center;
+    margin-block: 10px;
+}
+
+.sign-in-message-container {
+    margin: 0 auto;
 }
