@@ -1,4 +1,3 @@
-<?php $title = 'Admin - Delete-Users' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <div class="container mt-4">
@@ -18,28 +17,28 @@
                         <table class="table">
                             <tr>
                                 <th>Username:</th>
-                                <td><?= htmlspecialchars($data['user']['username']) ?></td>
+                                <td><?= htmlspecialchars($data['username']) ?></td>
                             </tr>
                             <tr>
                                 <th>Full Name:</th>
-                                <td><?= htmlspecialchars($data['user']['full_name']) ?></td>
+                                <td><?= htmlspecialchars($data['full_name']) ?></td>
                             </tr>
                             <tr>
                                 <th>Email:</th>
-                                <td><?= htmlspecialchars($data['user']['email']) ?></td>
+                                <td><?= htmlspecialchars($data['email']) ?></td>
                             </tr>
                             <tr>
                                 <th>Phone:</th>
-                                <td><?= htmlspecialchars($data['user']['phone']) ?></td>
+                                <td><?= htmlspecialchars($data['phone']) ?></td>
                             </tr>
                             <tr>
                                 <th>Role:</th>
-                                <td><?= ucfirst(htmlspecialchars($data['user']['role'])) ?></td>
+                                <td><?= ucfirst(htmlspecialchars($data['role'])) ?></td>
                             </tr>
                         </table>
                     </div>
 
-                    <form action="<?= URL_ROOT ?>/admin/delete-user/<?= $data['user']['id'] ?>" method="POST">
+                    <form action="<?= URL_ROOT ?>/admin/delete-user/<?= $data['id'] ?>" method="POST">
                         <div class="d-flex justify-content-between">
                             <a href="<?= URL_ROOT ?>/admin/user-management" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-danger">Delete User</button>

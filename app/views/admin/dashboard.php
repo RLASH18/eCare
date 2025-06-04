@@ -1,4 +1,3 @@
-<?php $title = 'Admin - Dashboard' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <div class="card">
@@ -38,8 +37,8 @@
                 <tr>
                     <td><?= htmlspecialchars($user['username']) ?></td>
                     <td><?= htmlspecialchars($user['full_name']) ?></td>
-                    <td><?= ucfirst($user['role']) ?></td>
-                    <td><?= date('M d, Y', strtotime($user['created_at'])) ?></td>
+                    <td><?= htmlspecialchars(ucfirst($user['role'])) ?></td>
+                    <td><?= htmlspecialchars(date('M d, Y', strtotime($user['created_at']))) ?></td>
                 </tr>
             <?php endforeach ?>
         </tbody>

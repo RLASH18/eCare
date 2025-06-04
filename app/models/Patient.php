@@ -23,15 +23,9 @@ class Patient {
     //-----------------------------------------------------------------------
     //a means appointment and u is users
     public function getAllAppointments() {
-        $this->db->query("SELECT a.*, u.full_name AS doctor_name, 
-                        CASE 
-                            WHEN a.status = 'pending' THEN 'Waiting for approval'
-                            WHEN a.status = 'approved' THEN 'Approved by doctor'
-                            WHEN a.status = 'cancelled' THEN 'Cancelled'
-                            ELSE a.status
-                        END as status
-                        FROM appointments a JOIN users u 
+        $this->db->query("SELECT a.*, u.full_name AS doctor_name FROM appointments a JOIN users u 
                         ON a.doctor_id = u.id WHERE a.patient_id = :patient_id ORDER BY a.scheduled_date DESC");
+        
         $this->db->bind(':patient_id', $_SESSION['user_id']);
         return $this->db->resultSet();
     }
@@ -91,6 +85,7 @@ class Patient {
     public function editAppointment($data) {
         $this->db->query("UPDATE appointments SET doctor_id = :doctor_id, scheduled_date = :scheduled_date, reason = :reason
                         WHERE id = :id AND patient_id = :patient_id AND status = 'pending'");
+        
         $this->db->bind(':id', $data['id']);
         $this->db->bind(':doctor_id', $data['doctor_id']);
         $this->db->bind(':scheduled_date', $data['scheduled_date']);
@@ -120,5 +115,15 @@ class Patient {
         else {
             return false;
         }
+    }
+    //-----------------------------------------------------------------------
+
+
+    public function getAllMedicalRecords() {
+        $this->db->query("SELECT m.*, u.full_name AS doctor_name FROM medical_records m JOIN users u ON m.doctor_id = u.id
+                        WHERE m.patient_id = :patient_id ORDER BY m.created_at DESC");
+        
+        $this->db->bind(':patient_id', $_SESSION['user_id']);
+        return $this->db->resultSet();
     }
 }

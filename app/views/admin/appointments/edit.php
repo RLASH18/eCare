@@ -1,6 +1,9 @@
+<?php $title = 'Admin - Edit-Appointment' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
-<form action="<?= URL_ROOT ?>/patient/edit-appointment/<?= $data['id'] ?>" method="POST">
+<h1><?= $data['patient_name'] ?></h1>
+
+<form action="<?= URL_ROOT ?>/admin/edit-appointment/<?= $data['id'] ?>" method="POST">
 
     <input type="hidden" name="id" id="id" value="<?= $data['id'] ?>">
     <div>
@@ -23,7 +26,7 @@
 
     <div>
         <label for="reason">Reason</label>
-        <textarea name="reason" id="reason" required><?= htmlspecialchars($data['reason']) ?></textarea>
+        <textarea name="reason" id="reason" readonly><?= htmlspecialchars($data['reason']) ?></textarea>
     </div>
 
     <button type="submit">Update appointment</button>

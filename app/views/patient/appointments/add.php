@@ -1,4 +1,3 @@
-<?php $title = 'Patient - Add-Appointment' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <form action="<?= URL_ROOT ?>/patient/add-appointment" method="POST">
@@ -16,12 +15,12 @@
 
     <div>
         <label for="date">Date</label>
-        <input type="date" name="scheduled_date" id="" required>
+        <input type="date" name="scheduled_date" id="date" required>
     </div>
 
     <div>
         <label for="reason">Reason</label>
-        <textarea name="reason" id="" required></textarea>
+        <textarea name="reason" id="reason" required></textarea>
     </div>
 
     <button type="submit">Add appointment</button>

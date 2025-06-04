@@ -1,4 +1,3 @@
-<?php $title = 'Admin - User-Management' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <h1>List of Users</h1>

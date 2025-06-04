@@ -50,6 +50,7 @@ class AdminController extends Controller {
 
         // Get dashboard statistics
         $this->view('admin/dashboard', $data = [
+            'title' => 'Admin Dashboard',
             'totalUsers' => $this->adminModel->getTotalUsers(),
             'totalDoctors' => $this->adminModel->getTotalDoctors(),
             'totalPatients' => $this->adminModel->getTotalPatients(),
@@ -62,6 +63,7 @@ class AdminController extends Controller {
         
         //shows data
         $this->view('admin/user-management', $data = [
+            'title' => 'Admin - User-Management',
             'users' => $this->adminModel->getAllUsers()
         ]);
     }
@@ -154,26 +156,22 @@ class AdminController extends Controller {
                 if($this->adminModel->addUser($data)) {
                     // Kung successful ang registration, mag-set ng flash message
                     FlashMessage::set('success', 'User added successfully.', 'alert alert-success');
-                    header('Location: ' . URL_ROOT . '/admin/user-management');
-                    exit;
                 }
 
                 else {
                     // Kung may error sa pag-save ng data sa database
                     FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
-                    $this->view('admin/user-control/add', $data);
                 }
-            } 
 
-            else {
-                //kung may error, pakita yung form again with error
-                $this->view('admin/user-control/add', $data);
-            }
+                header('Location: ' . URL_ROOT . '/admin/user-management');
+                exit;
+            } 
         }
         
         else {
             //pakita yung empty form
-            $this->view('admin/user-control/add', [
+            $this->view('admin/user-management/add', $data = [
+                'title' => 'Admin - Add-User',
                 'username' => '',
                 'password' => '',
                 'confirm_password' => '',
@@ -291,27 +289,21 @@ class AdminController extends Controller {
 
                 if($this->adminModel->updateUser($data)) {
                     FlashMessage::set('success', 'User has been updated successfully.', 'alert alert-success');
-                    header('Location: ' . URL_ROOT . '/admin/user-management');
-                    exit;
                 }
 
                 else {
                     FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
-                    $this->view('admin/user-control/edit', $data);
-
                 }
-            }
 
-            else {
-                //shows the form again
-                $this->view('admin/user-control/edit', $data);
+                header('Location: ' . URL_ROOT . '/admin/user-management');
+                exit;
             }
-            
         }
 
         else {
             //pakita yung empty form
-            $this->view('admin/user-control/edit', [
+            $this->view('admin/user-management/edit', $data = [
+                'title' => 'Admin - Edit-User',
                 'id' => $user['id'],
                 'username' => $user['username'],
                 'password' => '',
@@ -357,18 +349,36 @@ class AdminController extends Controller {
 
             if($this->adminModel->deleteUser($id)) {
                 FlashMessage::set('success', 'User has been deleted successfully.', 'alert alert-success');
-                header('Location: ' . URL_ROOT . '/admin/user-management');
-                exit;
+
             }
 
             else {
                 FlashMessage::set('error', 'Failed to delete user. Please try again.', 'alert alert-danger');
-                $this->view('admin/user-control/delete', ['user' => $user]);
             }
+
+            header('Location: ' . URL_ROOT . '/admin/user-management');
+            exit;
         }
 
         else {
-            $this->view('admin/user-control/delete', ['user' => $user]);
+            $this->view('admin/user-management/delete', $data = [
+                'title' => 'Admin - Delete-User',
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'password' => '',
+                'confirm_password' => '',
+                'full_name' => $user['full_name'],
+                'email' => $user['email'],
+                'phone' => $user['phone'],
+                'role' => $user['role'],
+                'username_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'full_name_err' => '',
+                'email_err' => '',
+                'phone_err' => '',
+                'role_err' => '',
+            ]);
 
         }
     }
@@ -376,15 +386,121 @@ class AdminController extends Controller {
 
     public function appointments() {
 
-        $data = [
-            'appointments' => $this->adminModel->getTotalAppointments()
-        ];
+        $this->view('admin/appointments', $data = [
+            'title' => 'Admin - Appointments',
+            'appointments' => $this->adminModel->getAllAppointments()
+        ]);
+    }
 
-        $this->view('admin/appointments', $data);
+    public function editAppointment($id = null) {
+        if($id === null) {
+            header('Location: ' . URL_ROOT . '/admin/appointments');
+            exit;
+        }
+
+        $appointment = $this->adminModel->getAppointmentById($id);
+
+        if(!$appointment) {
+            FlashMessage::set('error', 'Appointment not found', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/appointments');
+            exit;
+        }
+
+        if($appointment['status'] !== 'pending') {
+            FlashMessage::set('error', 'Only pending appointments can be edited.', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/appointments');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'id' => $id,
+                'patient_name' => $appointment['patient_name'],
+                'doctor_id' => trim($_POST['doctor_id']),
+                'scheduled_date' => trim($_POST['scheduled_date']),
+                'doctor_id_err' => '',
+                'scheduled_date_err' => '',
+            ];
+
+            if(empty($data['doctor_id'])) {
+                $data['doctor_id_err'] = 'Please choose the doctor';
+            }
+
+            if(empty($data['scheduled_date'])) {
+                $data['scheduled_date_err'] = 'Please select the schedule';
+            }
+
+            if(empty($data['doctor_id_err']) AND empty($data['scheduled_date_err'])) {
+
+                if($this->adminModel->editAppointment($data)) {
+                    FlashMessage::set('success', 'Appointment has been updated successfully.', 'alert alert success');
+
+                }
+
+                else {
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+
+                }
+
+                header('Location: ' . URL_ROOT . '/admin/appointments');
+                exit;
+            }   
+
+        }
+
+        else {
+            
+            $this->view('admin/appointments/edit', $data = [
+                'title' => 'Admin - Edit-Appointment',
+                'id' => $appointment['id'],
+                'patient_name' => $appointment['patient_name'],
+                'doctors' => $this->adminModel->getAllDoctors(),
+                'doctor_id' => $appointment['doctor_id'],
+                'scheduled_date' => $appointment['scheduled_date'],
+                'reason' => $appointment['reason'],
+                'doctor_id_err' => '',
+                'scheduled_date_err' => '', 
+                'reason_err' => ''
+            ]);
+        }
+    }
+
+    public function updateStatus() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $appointmentId = $_POST['appointment_id'];
+            $status = $_POST['status'];
+
+            if(!in_array($status, ['approved_by_admin', 'approved_by_doctor', 'rejected'])) {
+                FlashMessage::set('error', 'Invalid status value.'. 'alert alert-danger');
+                header('Location: ' . URL_ROOT . '/admin/appointments');
+                exit;
+            }
+
+            if($this->adminModel->updateAppointmentStatus($appointmentId, $status)) {
+                FlashMessage::set('success', 'Appointment status has been updated successfully.', 'alert alert-success');
+
+            }
+
+            else {
+                FlashMessage::set('error', 'Failed to update appointment status.', 'alert alert-error');
+
+            }
+
+            header('Location: ' . URL_ROOT . '/admin/appointments');
+            exit;
+        }
+
+        else {
+            $this->view('admin/appointments');
+        }
     }
 
     public function medicalRecords() {
-        $this->view('admin/medical-records');
+        
+        $this->view('admin/medical-records', $data = [
+            'title' => 'Admin - Medical-Records',
+            'records' => $this->adminModel->getAllMedicalRecords()
+        ]);
     }
 
     public function prescriptions() {

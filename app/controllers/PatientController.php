@@ -23,6 +23,7 @@ class PatientController extends Controller {
     public function dashboard() {
 
         $this->view('patient/dashboard', $data = [
+            'title' => 'Patient - Dashboard',
             'totalAppointments' => $this->patientModel->getTotalAppointments(),
             'totalBilling' => $this->patientModel->getTotalBills()
         ]);
@@ -32,6 +33,7 @@ class PatientController extends Controller {
     public function appointments() {
 
         $this->view('patient/appointments', $data = [
+            'title' => 'Patient - Appointments',
             'appointments' => $this->patientModel->getAllAppointments()
         ]);
 
@@ -66,29 +68,27 @@ class PatientController extends Controller {
 
                 if($this->patientModel->addAppointment($data)) {
                     FlashMessage::set('success', 'Appointment has been added successfully.', 'alert alert success');
-                    header('Location: ' . URL_ROOT . '/patient/appointments');
-                    exit;
                 }
 
                 else {
                     FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
-                    header('Location: ' . URL_ROOT . '/patient/appointments/add');
-                    exit;
                 }
+
+                header('Location: ' . URL_ROOT . '/patient/appointments');
+                exit;
             }
         }
 
         else {
-            $doctors = $this->patientModel->getAllDoctors();
 
             $this->view('patient/appointments/add', $data = [
-                'doctors' => $doctors,
-                'doctor_err' => '',
+                'title' => 'Patient - Add-Appointment',
+                'doctors' => $this->patientModel->getAllDoctors(),
+                'doctor_id_err' => '',
                 'scheduled_date_err' => '',
                 'reason_err' => ''
             ]);
         }
-
     }
 
     public function editAppointment($id = null) {
@@ -107,11 +107,12 @@ class PatientController extends Controller {
 
         if($appointment['status'] !== 'pending') {
             FlashMessage::set('error', 'Only pending appointments can be edited.', 'alert alert-danger');
-            header('Location: ' . URL_ROOT . '/patients/appointments');
+            header('Location: ' . URL_ROOT . '/patient/appointments');
             exit;
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
             $data = [
                 'id' => $id,
                 'doctor_id' => trim($_POST['doctor_id']),
@@ -138,15 +139,15 @@ class PatientController extends Controller {
 
                 if($this->patientModel->editAppointment($data)) {
                     FlashMessage::set('success', 'Appointment has been updated successfully.', 'alert alert success');
-                    header('Location: ' . URL_ROOT . '/patient/appointments');
-                    exit;
                 }
 
                 else {
                     FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
-                    header('Location: ' . URL_ROOT . '/patient/appointments/add');
-                    exit;
+
                 }
+
+                header('Location: ' . URL_ROOT . '/patient/appointments');
+                exit;
             }
 
         }
@@ -154,18 +155,17 @@ class PatientController extends Controller {
         else {
 
             $this->view('patient/appointments/edit', $data = [
+                'title' => 'Patient - Edit-Appointment',
                 'id' => $appointment['id'],
                 'doctor_id' => $appointment['doctor_id'],
+                'doctors' => $this->patientModel->getAllDoctors(),
                 'scheduled_date' => $appointment['scheduled_date'],
                 'reason' => $appointment['reason'],
-                'doctors' => $this->patientModel->getAllDoctors(),
                 'doctor_id_err' => '',
                 'scheduled_date_err' => '',
                 'reason_err' => ''
             ]);
-
         }
-        
     }
 
     public function deleteAppointment($id = null) {
@@ -185,13 +185,14 @@ class PatientController extends Controller {
 
         if($appointment['status'] !== 'pending') {
             FlashMessage::set('error', 'Only pending appointments can be deleted.', 'alert alert-danger');
-            header('Location: ' . URL_ROOT . '/patients/appointments');
+            header('Location: ' . URL_ROOT . '/patient/appointments');
             exit;
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             if($this->patientModel->deleteAppointment($id)) {
-                FlashMessage::set('success', 'Appointment has been delete successfully.', 'alert alert-success');
+                FlashMessage::set('success', 'Appointment has been deleted successfully.', 'alert alert-success');
             }
 
             else {
@@ -204,9 +205,24 @@ class PatientController extends Controller {
 
         else {
 
-            $this->view('patient/appointments/delete', ['appointment' => $appointment]);
+            $this->view('patient/appointments/delete', $data = [
+                'title' => 'Patient - Delete-Appointment',
+                'id' => $appointment['id'],
+                'doctor_id' => $appointment['doctor_id'],
+                'doctor_name' => $appointment['doctor_name'],
+                'scheduled_date' => $appointment['scheduled_date'],
+                'reason' => $appointment['reason'],
+                'doctor_id_err' => '',
+                'scheduled_date_err' => '',
+                'reason_err' => ''
+            ]);
         }
+    }
 
-
+    public function medicalRecords() {
+        $this->view('patient/medical-records', $data = [
+            'title' => 'Patient - Medical-Records',
+            'records' => $this->patientModel->getAllMedicalRecords()
+        ]);
     }
 }

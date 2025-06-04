@@ -1,4 +1,3 @@
-<?php $title = 'Admin - Delete-Users' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <div class="container mt-4">
@@ -10,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning">
-                        <strong>Warning!</strong> Are you sure you want to delete this user? This action cannot be undone.
+                        <strong>Warning!</strong> Are you sure you want to delete this appointment? This action cannot be undone.
                     </div>
 
                     <div class="user-details mb-4">
@@ -18,20 +17,20 @@
                         <table class="table">
                             <tr>
                                 <th>Doctor name:</th>
-                                <td><?= htmlspecialchars($data['appointment']['doctor_name']) ?></td>
+                                <td><?= htmlspecialchars($data['doctor_name']) ?></td>
                             </tr>
                             <tr>
                                 <th>Scheduled date:</th>
-                                <td><?= htmlspecialchars($data['appointment']['scheduled_date']) ?></td>
+                                <td><?= htmlspecialchars(date('F d, Y', strtotime($data['scheduled_date']))) ?></td>
                             </tr>
                             <tr>
                                 <th>Reason:</th>
-                                <td><?= htmlspecialchars($data['appointment']['reason']) ?></td>
+                                <td><?= htmlspecialchars($data['reason']) ?></td>
                             </tr>
                         </table>
                     </div>
 
-                    <form action="<?= URL_ROOT ?>/patient/delete-appointment/<?= $data['appointment']['id'] ?>" method="POST">
+                    <form action="<?= URL_ROOT ?>/patient/delete-appointment/<?= $data['id'] ?>" method="POST">
                         <div class="d-flex justify-content-between">
                             <a href="<?= URL_ROOT ?>/patient/appointments" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-danger">Delete appointment</button>

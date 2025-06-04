@@ -1,4 +1,3 @@
-<?php $title = 'eCare Login' ?>
 <?php include APP_ROOT . '/views/inc/header.php' ?>
 
 <div class="flex min-h-screen items-center justify-center">

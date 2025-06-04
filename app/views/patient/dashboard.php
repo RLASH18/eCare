@@ -1,4 +1,3 @@
-<?php $title = 'Patient - Dashboard' ?>
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <div class="card">

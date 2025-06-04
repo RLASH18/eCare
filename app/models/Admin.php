@@ -123,12 +123,70 @@ class Admin {
     //-----------end user-management-----------
     
 
-    public function getTotalAppointments() {
-        $this->db->query("SELECT * FROM appointments");
+     //-----------appointment------------------
+    public function getAllAppointments() {
+        $this->db->query("SELECT a.*, p.full_name AS patient_name, d.full_name AS doctor_name 
+                        FROM appointments a JOIN users p ON a.patient_id = p.id JOIN users d ON a.doctor_id = d.id 
+                        ORDER BY a.scheduled_date DESC");
+
         return $this->db->resultSet();
     }
 
+    public function getAllDoctors() {
+        $this->db->query("SELECT id, full_name FROM users WHERE role = 'doctor'");
+        return $this->db->resultSet();
+    }
 
+    public function getAppointmentById($id) {
+        $this->db->query("SELECT a.*, p.full_name AS patient_name, d.full_name AS doctor_name FROM appointments a 
+                        JOIN users p ON a.patient_id = p.id JOIN users d ON a.doctor_id = d.id WHERE a.id = :id");
+
+        $this->db->bind(':id', $id);
+        return $this->db->result();
+    }
+
+    public function editAppointment($data) {
+        $this->db->query("UPDATE appointments SET doctor_id = :doctor_id, scheduled_date = :scheduled_date
+                        WHERE id = :id AND status = 'pending'");
+
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':doctor_id', $data['doctor_id']);
+        $this->db->bind(':scheduled_date', $data['scheduled_date']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+
+    }
+
+    public function updateAppointmentStatus($appointmentId, $status) {
+        $this->db->query("UPDATE appointments SET status = :status WHERE id = :id");
+        $this->db->bind(':status', $status);
+        $this->db->bind(':id', $appointmentId);
+        
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+    //-----------end appointment------------------
+
+
+    //-----------medical record------------------
+    public function getAllMedicalRecords() {
+        $this->db->query("SELECT m.*, p.full_name AS patient_name, d.full_name AS doctor_name
+                        FROM medical_records m JOIN users p ON m.patient_id = p.id JOIN users d ON m.doctor_id = d.id
+                        ORDER BY m.created_at DESC");
+
+        return $this->db->resultSet();
+    }
 
 
 }

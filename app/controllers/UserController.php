@@ -24,7 +24,10 @@ class UserController extends Controller {
         }
 
         // Kung walang naka-login, ipakita ang login page
-        $this->view('user/login');
+        $this->view('user/login', $data = [
+            'title' => 'eCare Login'
+
+        ]);
     }
 
     // Login method - ito ang pangunahing login function na tumatanggap ng credentials
@@ -75,7 +78,9 @@ class UserController extends Controller {
 
         else {
             // Kung hindi POST request, ipakita lang ang login form
-            $this->view('user/login');
+            $this->view('user/login', $data = [
+                'title' => 'eCare Login'
+            ]);
         }
     }
 
@@ -194,6 +199,7 @@ class UserController extends Controller {
         else {
             // Kung hindi POST request, ipakita lang ang registration form
             $this->view('user/register', $data = [
+                'title' => 'eCare Register',
                 'username' => '',
                 'password' => '',
                 'confirm_password' => '',

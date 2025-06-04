@@ -23,7 +23,7 @@ CREATE TABLE appointments (
     doctor_id INT NOT NULL,
     scheduled_date DATETIME NOT NULL,
     reason TEXT,
-    status ENUM('pending', 'approved', 'cancelled', 'completed') DEFAULT 'pending',
+    status ENUM('pending', 'approved_by_admin', 'approved_by_doctor', 'rejected') DEFAULT 'pending',
     FOREIGN KEY (patient_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES users(id) ON DELETE CASCADE
 );
