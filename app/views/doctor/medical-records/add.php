@@ -11,16 +11,25 @@
                 </option>
             <?php endforeach ?>
         </select>
+        <?php if (!empty($data['patient_id_err'])): ?>
+            <p><?= $data['patient_id_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <div>
         <label for="diagnosis">Diagnosis</label>
         <textarea name="diagnosis" id="diagnosis"></textarea>
+        <?php if (!empty($data['diagnosis_err'])): ?>
+            <p><?= $data['diagnosis_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <div>
         <label for="treatment">Treatment</label>
         <textarea name="treatment" id="treatment" required></textarea>
+        <?php if (!empty($data['treatment_err'])): ?>
+            <p><?= $data['treatment_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <button type="submit">Add medical record</button>

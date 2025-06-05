@@ -26,8 +26,12 @@
                     <td><?= htmlspecialchars($user['phone']) ?></td>
                     <td><?= htmlspecialchars($user['role']) ?></td>
                     <td>
-                        <a href="<?= URL_ROOT ?>/admin/edit-user/<?= $user['id'] ?>">Edit</a>
-                        <a href="<?= URL_ROOT ?>/admin/delete-user/<?= $user['id'] ?>">Delete</a>
+                        <?php if ($user['role'] === 'admin') : ?>
+                            <span>No action</span>
+                        <?php else : ?>
+                            <a href="<?= URL_ROOT ?>/admin/edit-user/<?= $user['id'] ?>">Edit</a>
+                            <a href="<?= URL_ROOT ?>/admin/delete-user/<?= $user['id'] ?>">Delete</a>
+                        <?php endif ?>
                     </td>
                 </tr>
             <?php endforeach ?>

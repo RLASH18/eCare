@@ -77,6 +77,10 @@ class PatientController extends Controller {
                 header('Location: ' . URL_ROOT . '/patient/appointments');
                 exit;
             }
+
+            else {
+                $this->view('patient/appointments/add', $data);
+            }
         }
 
         else {
@@ -148,6 +152,10 @@ class PatientController extends Controller {
 
                 header('Location: ' . URL_ROOT . '/patient/appointments');
                 exit;
+            }
+
+            else {
+                $this->view('patient/appointments/edit', $data);
             }
 
         }
@@ -223,6 +231,13 @@ class PatientController extends Controller {
         $this->view('patient/medical-records', $data = [
             'title' => 'Patient - Medical-Records',
             'records' => $this->patientModel->getAllMedicalRecords()
+        ]);
+    }
+
+    public function prescriptions() {
+        $this->view('patient/prescriptions', $data = [
+            'title' => 'Patient - Prescriptions',
+            'prescriptions' => $this->patientModel->getAllPrescriptions() 
         ]);
     }
 }

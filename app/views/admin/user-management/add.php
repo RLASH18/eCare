@@ -16,7 +16,6 @@
         <?php if (!empty($data['password_err'])): ?>
             <p><?= $data['password_err'] ?></p>
         <?php endif ?>
-
     </div>
 
     <div>

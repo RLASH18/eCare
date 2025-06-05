@@ -12,7 +12,7 @@
                         <strong>Warning!</strong> Are you sure you want to delete this appointment? This action cannot be undone.
                     </div>
 
-                    <div class="user-details mb-4">
+                    <div class="appointment-details mb-4">
                         <h5>Appointment Details:</h5>
                         <table class="table">
                             <tr>

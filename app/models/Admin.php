@@ -7,7 +7,7 @@ class Admin {
         $this->db = new Database();
     }
 
-    //-----------dashboard infos-----------
+    //--------------------------Dashboard Query------------------------------
     public function getTotalUsers() {
         $this->db->query("SELECT COUNT(*) AS total_users FROM users");
         return $this->db->result()['total_users'];
@@ -33,10 +33,10 @@ class Admin {
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }
-    //-----------end dashboard-----------
+    //-----------------------------------------------------------------------
 
 
-    //-----------user-management-----------
+    //--------------------------User-Management Query------------------------
     public function getAllUsers() {
         $this->db->query("SELECT * FROM users");
         return $this->db->resultSet();
@@ -67,7 +67,6 @@ class Admin {
         $this->db->query("INSERT INTO users (username, password, full_name, email, phone, role) 
                         VALUES (:username, :password, :full_name, :email, :phone, :role)");
         
-        // I-bind ang lahat ng data para sa security
         $this->db->bind(':username', $data['username']);
         $this->db->bind(':password', $data['password']);
         $this->db->bind(':full_name', $data['full_name']);
@@ -85,15 +84,22 @@ class Admin {
     }
 
     public function updateUser($data) {
-        //base query without password
+        //Base query without password
         $sql = ("UPDATE users SET username = :username, full_name = :full_name, email = :email, phone = :phone, role = :role");
 
-        //add password to update if nag exist
+        /** Kung may password na binigay sa data array
+         *  - I-update din ang password field sa database
+         *  - Kung walang password, hindi na i-update ang password field
+         *  - Ginagamit ito para hindi ma-overwrite ang existing password kung hindi naman kailangan palitan
+         */
         if(isset($data['password'])) {
             $sql .= ", password = :password";
         }
 
-        //add where clause 
+        /** Idagdag ang WHERE clause sa query
+         *  - Para ma-identify kung aling user ang i-update
+         *  - Ginagamit ang id para sa specific user
+         */
         $sql .= " WHERE id = :id";
 
         $this->db->query($sql);
@@ -120,10 +126,24 @@ class Admin {
         $this->db->bind(':id', $id);
         return $this->db->execute();
     }
-    //-----------end user-management-----------
+    //-----------------------------------------------------------------------
     
 
-     //-----------appointment------------------
+    //--------------------------Appointment Query----------------------------
+    /** Kukunin ang lahat ng appointments sa system
+     *  
+     *  JOIN explanation:
+     *  - 'a' ay alias para sa appointments table
+     *  - 'p' ay alias para sa users table (patient)
+     *  - 'd' ay alias para sa users table (doctor)
+     *  - Multiple JOIN ginagamit para kunin ang:
+     *  
+     *  1. Patient name mula sa users table (a.patient_id = p.id)
+     *  2. Doctor name mula sa users table (a.doctor_id = d.id)
+     * 
+     *  - Ang mga JOIN ay ginagamit para ma-link ang appointments sa patient at doctor information
+     * 
+     */
     public function getAllAppointments() {
         $this->db->query("SELECT a.*, p.full_name AS patient_name, d.full_name AS doctor_name 
                         FROM appointments a JOIN users p ON a.patient_id = p.id JOIN users d ON a.doctor_id = d.id 
@@ -132,11 +152,24 @@ class Admin {
         return $this->db->resultSet();
     }
 
+
     public function getAllDoctors() {
         $this->db->query("SELECT id, full_name FROM users WHERE role = 'doctor'");
         return $this->db->resultSet();
     }
 
+    /** Kukunin ang specific appointment base sa ID
+     * 
+     *  JOIN explanation:
+     *  - 'a' ay alias para sa appointments table
+     *  - 'p' ay alias para sa users table (patient)
+     *  - 'd' ay alias para sa users table (doctor)
+     *  - Multiple JOIN ginagamit para kunin ang:
+     *  
+     *  1. Patient name mula sa users table (a.patient_id = p.id)
+     *  2. Doctor name mula sa users table (a.doctor_id = d.id)
+     * 
+     */ 
     public function getAppointmentById($id) {
         $this->db->query("SELECT a.*, p.full_name AS patient_name, d.full_name AS doctor_name FROM appointments a 
                         JOIN users p ON a.patient_id = p.id JOIN users d ON a.doctor_id = d.id WHERE a.id = :id");
@@ -176,10 +209,23 @@ class Admin {
             return false;
         }
     }
-    //-----------end appointment------------------
+    //-----------------------------------------------------------------------
 
 
-    //-----------medical record------------------
+    //--------------------------Medical-Record Query-------------------------
+
+    /** Kukunin ang lahat ng medical records sa system
+     * 
+     *  JOIN explanation:
+     *  - 'm' ay alias para sa medical_records table
+     *  - 'p' ay alias para sa users table (patient)
+     *  - 'd' ay alias para sa users table (doctor)
+     *  - Multiple JOIN ginagamit para kunin ang:
+     *  
+     *  1. Patient name mula sa users table (m.patient_id = p.id)
+     *  2. Doctor name mula sa users table (m.doctor_id = d.id)
+     *  - Ang mga JOIN ay ginagamit para ma-link ang medical records sa patient at doctor information
+     */
     public function getAllMedicalRecords() {
         $this->db->query("SELECT m.*, p.full_name AS patient_name, d.full_name AS doctor_name
                         FROM medical_records m JOIN users p ON m.patient_id = p.id JOIN users d ON m.doctor_id = d.id
@@ -187,6 +233,33 @@ class Admin {
 
         return $this->db->resultSet();
     }
+    //-----------------------------------------------------------------------
 
+
+    //--------------------------Prescription Query---------------------------
+    /** Kukunin ang lahat ng prescriptions sa system
+     * 
+     *  JOIN explanation:
+     *  - 'pr' ay alias para sa prescriptions table
+     *  - 'pat' ay alias para sa users table (patient)
+     *  - 'doc' ay alias para sa users table (doctor)
+     *  - 'm' ay alias para sa medical_records table
+     *  - Multiple JOIN ginagamit para kunin ang:
+     *  
+     *  1. Medical record information (pr.record_id = m.id)
+     *  2. Patient name mula sa users table (m.patient_id = pat.id)
+     *  3. Doctor name mula sa users table (m.doctor_id = doc.id)
+     * 
+     *  - Ang mga JOIN ay ginagamit para ma-link ang prescriptions sa medical records, patient, at doctor information
+     * 
+     */
+    public function getAllPrescriptions() {
+        $this->db->query("SELECT pr.*, pat.full_name AS patient_name, doc.full_name AS doctor_name, m.diagnosis FROM prescriptions pr
+                        JOIN medical_records m ON pr.record_id = m.id 
+                        JOIN users pat ON m.patient_id = pat.id
+                        JOIN users doc ON m.doctor_id = doc.id");
+
+        return $this->db->resultSet();
+    }
 
 }

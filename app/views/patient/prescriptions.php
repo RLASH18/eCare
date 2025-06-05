@@ -5,9 +5,7 @@
         <thead>
             <tr>
                 <th>Doctor's Name</th>
-                <th>Patient's Name</th>
-                <th>Diagnosis</th>
-                <th>Medicine name</th>
+                <th>Medicine Name</th>
                 <th>Dosage</th>
             </tr>
         </thead>
@@ -15,8 +13,6 @@
             <?php foreach ($data['prescriptions'] as $prescription) : ?>
                 <tr>
                     <td><?= htmlspecialchars($prescription['doctor_name']) ?></td>
-                    <td><?= htmlspecialchars($prescription['patient_name']) ?></td>
-                    <td><?= htmlspecialchars($prescription['diagnosis']) ?></td>
                     <td><?= htmlspecialchars($prescription['medicine_name']) ?></td>
                     <td><?= htmlspecialchars($prescription['dosage']) ?></td>
                 </tr>

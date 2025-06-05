@@ -165,7 +165,11 @@ class AdminController extends Controller {
 
                 header('Location: ' . URL_ROOT . '/admin/user-management');
                 exit;
-            } 
+            }
+            
+            else {
+                $this->view('admin/user-management/add', $data);
+            }
         }
         
         else {
@@ -297,6 +301,10 @@ class AdminController extends Controller {
 
                 header('Location: ' . URL_ROOT . '/admin/user-management');
                 exit;
+            }
+
+            else {
+                $this->view('admin/user-management/edit', $data);
             }
         }
 
@@ -444,7 +452,11 @@ class AdminController extends Controller {
 
                 header('Location: ' . URL_ROOT . '/admin/appointments');
                 exit;
-            }   
+            }
+            
+            else {
+                $this->view('admin/appointments/edit', $data);
+            }
 
         }
 
@@ -504,7 +516,10 @@ class AdminController extends Controller {
     }
 
     public function prescriptions() {
-        $this->view('admin/prescriptions');
+        $this->view('admin/prescriptions', $data = [
+            'title' => 'Admin - Prescriptions', 
+            'prescriptions' => $this->adminModel->getAllPrescriptions()
+        ]);
     }
 
     public function billing() {

@@ -11,16 +11,25 @@
                 </option>
             <?php endforeach ?>
         </select>
+        <?php if (!empty($data['doctor_id_err'])): ?>
+            <p><?= $data['doctor_id_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <div>
         <label for="date">Date</label>
         <input type="date" name="scheduled_date" id="date" required>
+        <?php if (!empty($data['scheduled_date_err'])): ?>
+            <p><?= $data['scheduled_date_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <div>
         <label for="reason">Reason</label>
         <textarea name="reason" id="reason" required></textarea>
+        <?php if (!empty($data['reason_err'])): ?>
+            <p><?= $data['reason_err'] ?></p>
+        <?php endif ?>
     </div>
 
     <button type="submit">Add appointment</button>

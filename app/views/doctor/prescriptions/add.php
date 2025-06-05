@@ -1,0 +1,44 @@
+<?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
+
+
+<form action="<?= URL_ROOT ?>/doctor/add-prescriptions" method="POST">
+    <div>
+        <label for="record_id">Select Medical Record</label>
+        <select name="record_id" id="record_id" required>
+            <option value="" disabled selected>Choose a medical record</option>
+            <?php foreach($data['records'] as $record) : ?>
+                <option value="<?= htmlspecialchars($record['id']) ?>">
+                    <?= htmlspecialchars($record['patient_name']) ?> - 
+                    <?= htmlspecialchars($record['diagnosis']) ?>
+                </option>
+            <?php endforeach ?>
+        </select>
+        <?php if (!empty($data['record_id_err'])): ?>
+            <p><?= $data['record_id_err'] ?></p>
+        <?php endif ?>
+    </div>
+
+    <div>
+        <label for="medicine_name">Medicine name</label>
+        <input type="text" name="medicine_name" id="medicine_name">
+        <?php if (!empty($data['medicine_name_err'])): ?>
+            <p><?= $data['medicine_name_err'] ?></p>
+        <?php endif ?>
+    </div>
+
+    <div>
+        <label for="dosage">Dosage</label>
+        <input type="text" name="dosage" id="dosage" required></input type="text">
+        <?php if (!empty($data['dosage_err'])): ?>
+            <p><?= $data['dosage_err'] ?></p>
+        <?php endif ?>
+    </div>
+
+    <button type="submit">Add prescriptions</button>
+</form>
+
+
+
+
+
+<?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>
