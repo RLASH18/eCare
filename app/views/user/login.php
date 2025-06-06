@@ -1,7 +1,7 @@
 <?php include APP_ROOT . '/views/inc/header.php' ?>
 
-<div class="flex min-h-screen items-center justify-center">
-    <div class="form-container w-96 p-6">
+<div class="flex items-center min-h-screen justify-center">
+    <div class="form-container p-6">
         <div class="form-header">
             <h1 class="login-text font-bold">Login to eCare</h1>
         </div>

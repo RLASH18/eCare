@@ -34,16 +34,17 @@
     border-radius: 10px;
 }
 
-.username-container, .email-container , .password-container{
-    border-radius: 6px;
-    
+.username-container img, .email-container img, .password-container img {
+    /* position: relative; */
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    /* margin-top: 13px; */
+    /* margin-left: 10px; */
 }
 
-.username-container img, .email-container img, .password-container img {
-    position: absolute;
-    margin-top: 13px;
-    margin-left: 10px;
-}
+
 
 .remember-forgot-container {
     display: flex;
@@ -128,6 +129,7 @@
 .input-fields input {
     background-color: rgb(214, 208, 208);
     display: flex;
+    padding: 8px;
     flex-direction: column;
     width: calc(100% / 2 -50px);
     border-radius: 6px;
@@ -139,8 +141,8 @@ form input {
 }
 
 .email-phone-container input{
-    margin-left: 10px;
     border-radius: 6px;
+    padding: 8px;
 }
 
 .register-button-container button {
@@ -195,4 +197,130 @@ form input {
 
 .sign-in-message-container {
     margin: 0 auto;
+}
+
+
+
+
+/* Dashboard Admin */
+
+aside {
+    grid-row-start: 1;
+    grid-row-end: 4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #ebe5e5;
+
+}
+
+aside .sidebar-left-logo {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+aside .sidebar-left-options {
+    display: flex;
+    flex-direction: column;
+    height: 90vh; /* Sets the height of sidebar left*/
+    position: relative;
+    top: 1rem;
+}
+
+aside .sidebar-left-options a {
+    display: flex;
+    height: 3rem; /* Creates a height gap between options on the left sidebar*/
+    gap: 0.8rem;
+    margin-left: 1rem;
+    padding-left: 5px;
+}
+
+
+aside .sidebar-left-options .side-link.active{
+    background-color: #007FA3;
+    color: white;
+    transition: background-color 600ms ease, border-left 200ms ease;
+    border-radius: 0 10px 10px 0;
+    border-left: 5px solid rgb(106, 106, 241);
+
+}
+
+aside .sidebar-left-options a {
+    display: flex;
+    align-items: center;
+}
+
+aside .sidebar-left-options h3 {
+    justify-content: center;
+}
+
+/* Sets the help option to the bottom part of the sidebar left*/
+aside .sidebar-left-lower {
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+}
+
+/* The main grid/body grid */
+body.admin {
+    display: grid;
+    grid-template-columns: 14rem auto;
+    grid-template-rows: 40px auto;
+}
+
+header {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background-color: skyblue;
+}
+
+.header-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.header-school-section {
+    text-align: right;
+}
+
+
+/* Main Content Section */
+.main-content {
+    grid-column-start: 2;
+}
+
+.card img {
+    width: 40%;
+    height: 100%;
+}
+
+
+.card {
+    border: 1px solid gray;
+    display: flex;
+    padding: 10px;
+    background-color: #F0F9FF;
+    gap: 30px;
+    border-radius: 10px;
+    color: #007FA3;
+}
+
+.card div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+thead tr {
+    background-color: #007FA3;
+}
+
+.card h5 {
+    font-size: 1.8rem;
+}
+
+.table-container h3{
+    color: #007FA3;
 }

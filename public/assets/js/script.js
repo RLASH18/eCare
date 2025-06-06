@@ -1,3 +1,19 @@
+
+// Function to handle click events on side links
+function setActiveLink(clickedLink) {
+      // Prevent default link behavior
+      event.preventDefault();
+
+      // Get all nav links
+      const links = document.querySelectorAll('.side-link');
+
+      // Remove 'active' class from all
+      links.forEach(link => link.classList.remove('active'));
+
+      // Add 'active' to clicked one
+      clickedLink.classList.add('active');
+}
+
 /**
  * kapag loaded na yung html tsaka lang mag r run yung javascript 
  * pwede gumawa ng function sa baba then call na lang dito 
@@ -39,4 +55,20 @@ function dismissAlert(button) {
         alert.remove();
     }, 200);
 }
+
+
+// Get all link elements
+    // const links = document.querySelectorAll('.nav-link');
+
+    // links.forEach(link => {
+    //   link.addEventListener('click', function(event) {
+    //     event.preventDefault(); // Prevent actual link navigation
+
+    //     // Remove 'active' class from all links
+    //     links.forEach(l => l.classList.remove('active'));
+
+    //     // Add 'active' class to the clicked link
+    //     this.classList.add('active');
+    //   });
+    // });
 
