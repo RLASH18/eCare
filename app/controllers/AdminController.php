@@ -87,7 +87,6 @@ class AdminController extends Controller {
                 'email_err' => '',
                 'phone_err' => '',
                 'role_err' => '',
-                'form_data' => $_POST
             ];
 
             // Validation para sa username field
@@ -230,7 +229,6 @@ class AdminController extends Controller {
                 'email_err' => '',
                 'phone_err' => '',
                 'role_err' => '',
-                'form_data' => $_POST
             ];
 
             // Validation para sa username field
@@ -378,16 +376,8 @@ class AdminController extends Controller {
                 'full_name' => $user['full_name'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],
-                'role' => $user['role'],
-                'username_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => '',
-                'full_name_err' => '',
-                'email_err' => '',
-                'phone_err' => '',
-                'role_err' => '',
+                'role' => $user['role']
             ]);
-
         }
     }
 
@@ -590,19 +580,305 @@ class AdminController extends Controller {
 
     }
 
-    public function editBilling() {
-        $this->view('admin/billings/edit', $data = [
-            'title' => 'Admin - Edit-Billing',
-        ]);
+    public function editBilling($id = null) {
+        
+        if($id === null) {
+            header('Location: ' . URL_ROOT . '/admin/billings');
+            exit;
+        }
+
+        $billings = $this->adminModel->getBillingById($id);
+
+        if(!$billings) {
+            FlashMessage::set('error', 'Billings not found.', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/billings');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $data = [
+                'id' => $id,
+                'patient_id' => trim($_POST['patient_id']),
+                'amount' => trim($_POST['amount']),
+                'status' => trim($_POST['status']),
+                'description' => trim($_POST['description']),
+                'patient_id_err' => '',
+                'amount_err' => '',
+                'status_err' => '',
+                'description_err' => ''
+            ];
+
+            if(empty($data['patient_id'])) {
+                $data['patient_id_err'] = 'Please choose a patient';
+            }
+
+            if(empty($data['amount'])) {
+                $data['amount_err'] = 'Please enter the amount';
+            }
+
+            if(empty($data['status'])) {
+                $data['status_err'] = 'Please enter the status';
+            }
+
+            if(empty($data['description'])) {
+                $data['description_err'] = 'Please enter a description';
+            }
+
+            if(empty($data['patient_id_err']) AND empty($data['amount_err']) AND empty($data['status_err']) AND empty($data['description_err'])) {
+
+                if($this->adminModel->editBilling($data)) {
+                    FlashMessage::set('success', 'Billing has been updated successfully.', 'alert alert success');
+                }
+
+                else {
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+
+                }
+
+                header('Location: ' . URL_ROOT . '/admin/billings');
+                exit;
+            }
+
+            else {
+                $this->view('admin/billings/edit', $data);
+            }
+        }
+
+        else {
+
+            $this->view('admin/billings/edit', $data = [
+                'title' => 'Admin - Edit-Billing',
+                'id' => $billings['id'],
+                'patient_id' => $billings['patient_id'],
+                'patients' => $this->adminModel->getAllPatients(),
+                'amount' => $billings['amount'],
+                'status' => $billings['status'],
+                'description' => $billings['description'],
+                'patient_id_err' => '',
+                'amount_err' => '',
+                'status_err' => '',
+                'description_err' => ''
+            ]);
+        }
     }
 
-    public function deleteBilling() {
-        $this->view('admin/billings/delete', $data = [
-            'title' => 'Admin - Delete-Billing',
-        ]);
+    public function deleteBilling($id = null) {
+
+        if($id === null) {
+            header('Location: ' . URL_ROOT . '/admin/billings');
+            exit;
+        }
+
+        $billings = $this->adminModel->getBillingById($id);
+
+        if(!$billings) {
+            FlashMessage::set('error', 'Billings not found.', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/billings');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if($this->adminModel->deleteBilling($id)) {
+                FlashMessage::set('success', 'Billing has been deleted successfully.', 'alert alert-success');
+            }
+
+            else {
+                FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+            }
+
+            header('Location: ' . URL_ROOT . '/admin/billings');
+            exit;
+        }
+
+        else {
+
+            $this->view('admin/billings/delete', $data = [
+                'title' => 'Admin - Delete-Billing',
+                'id' => $billings['id'],
+                'patient_id' => $billings['patient_id'],
+                'patient_name' => $billings['patient_name'],
+                'amount' => $billings['amount'],
+                'status' => $billings['status'],
+                'description' => $billings['description']
+            ]);
+        }
     }
 
     public function inventory() {
-        $this->view('admin/inventory');
+
+        $this->view('admin/inventory', $data = [
+            'title' => 'Admin - Inventory',
+            'items' => $this->adminModel->getAllInventoryItems()
+        ]);
+    }
+
+    public function addInventory() {
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $data = [
+                'item_name' => trim($_POST['item_name']),
+                'quantity' => trim($_POST['quantity']),
+                'description' => trim($_POST['description']),
+                'item_name_err' => '',
+                'quantity_err' => '',
+                'description_err' => ''
+            ];
+
+            if(empty($data['item_name'])) {
+                $data['item_name_err'] = 'Please enter the item name';
+            }
+
+            if(empty($data['quantity'])) {
+                $data['quantity_err'] = 'Please enter the quantity';
+            }
+
+            if(empty($data['description'])) {
+                $data['description_err'] = 'Please enter the description';
+            }
+
+            if(empty($data['item_name_err']) AND empty($data['quantity_err']) AND empty($data['description_err'])) {
+
+                if($this->adminModel->addInventory($data)) {
+                    FlashMessage::set('success', 'Inventory item has been added successfully.', 'alert alert success');
+                }
+
+                else {
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+                }
+
+                header('Location: ' . URL_ROOT . '/admin/inventory');
+                exit;
+            }
+
+            else {
+                $this->view('admin/inventory/add', $data);
+            }
+        }
+
+        $this->view('admin/inventory/add', $data = [
+            'title' => 'Admin - Add-Inventory',
+            'item_name_err' => '',
+            'quantity_err' => '',
+            'description_err' => ''
+        ]);
+    }
+
+    public function editInventory($id = null) {
+
+        if($id === null) {
+            header('Location: ' . URL_ROOT . '/admin/inventory');
+            exit;
+        }
+
+        $items = $this->adminModel->getInventoryById($id);
+
+        if(!$items) {
+            FlashMessage::set('error', 'Inventory item not found.', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/inventory');
+            exit;
+        }
+
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $data = [
+                'id' => $id,
+                'item_name' => trim($_POST['item_name']),
+                'quantity' => trim($_POST['quantity']),
+                'description' => trim($_POST['description']),
+                'item_name_err' => '',
+                'quantity_err' => '',
+                'description_err' => ''
+            ];
+
+            if(empty($data['item_name'])) {
+                $data['item_name_err'] = 'Please enter the item name';
+            }
+
+            if(empty($data['quantity'])) {
+                $data['quantity_err'] = 'Please enter the quantity';
+            }
+
+            if(empty($data['description'])) {
+                $data['description_err'] = 'Please enter the description';
+            }
+
+            if(empty($data['item_name_err']) AND empty($data['quantity_err']) AND empty($data['description_err'])) {
+
+                if($this->adminModel->editInventory($data)) {
+                    FlashMessage::set('success', 'Inventory item has been Updated successfully.', 'alert alert success');
+                }
+
+                else {
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+                }
+
+                header('Location: ' . URL_ROOT . '/admin/inventory');
+                exit;
+            }
+
+            else {
+                $this->view('admin/inventory/edit', $data);
+            }
+        }
+
+        else {
+            $this->view('admin/inventory/edit', $data = [
+                'title' => 'Admin - Edit-Inventory',
+                'id' => $items['id'],
+                'item_name' => $items['item_name'],
+                'quantity' => $items['quantity'],
+                'description' => $items['description'],
+                'item_name_err' => '',
+                'quantity_err' => '',
+                'description_err' => ''
+
+            ]);
+        }
+
+    }
+
+    public function deleteInventory($id = null) {
+
+        if($id === null) {
+            header('Location: ' . URL_ROOT . '/admin/inventory');
+            exit;
+        }
+
+        $items = $this->adminModel->getInventoryById($id);
+
+        if(!$items) {
+            FlashMessage::set('error', 'Inventory item not found.', 'alert alert-danger');
+            header('Location: ' . URL_ROOT . '/admin/inventory');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if($this->adminModel->deleteInventory($id)) {
+                FlashMessage::set('success', 'Inventory item has been delete successfully.', 'alert alert-success');
+            }
+
+            else {
+                FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+            }
+
+            header('Location: ' . URL_ROOT . '/admin/inventory');
+            exit;
+        }
+
+        else {
+            
+            $this->view('admin/inventory/delete', $data = [
+                'title' => 'Admin - Delete-Inventory',
+                'id' => $items['id'],
+                'item_name' => $items['item_name'],
+                'quantity' => $items['quantity'],
+                'description' => $items['description']
+            ]);
+        }
     }
 }

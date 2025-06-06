@@ -3,6 +3,7 @@
 <form action="<?= URL_ROOT ?>/doctor/edit-record/<?= $data['id'] ?>" method="POST">
 
     <input type="hidden" name="id" id="id" value="<?= $data['id'] ?>">
+    
     <div>
         <label for="patient_name">Patients's Name</label>
         <select name="patient_id" id="patient_name" required>
@@ -34,8 +35,10 @@
             <p><?= $data['treatment_err'] ?></p>
         <?php endif ?>
     </div>
-
+    
+    <a href="<?= URL_ROOT ?>/doctor/medical-records" class="btn btn-secondary">Cancel</a>
     <button type="submit">Update medical record</button>
+
 </form>
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

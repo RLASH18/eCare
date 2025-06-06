@@ -1,6 +1,7 @@
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <form action="<?= URL_ROOT ?>/doctor/add-record" method="POST">
+
     <div>
         <label for="patient_name">Patient's Name</label>
         <select name="patient_id" id="patient_name" required>
@@ -32,7 +33,9 @@
         <?php endif ?>
     </div>
 
+    <a href="<?= URL_ROOT ?>/doctor/medical-records" class="btn btn-secondary">Cancel</a>
     <button type="submit">Add medical record</button>
+    
 </form>
 
 

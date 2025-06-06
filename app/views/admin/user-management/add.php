@@ -68,7 +68,8 @@
         <?php endif ?>
     </div>
 
-    <button type="submit">Register User</button>
+    <a href="<?= URL_ROOT ?>/admin/user-management" class="btn btn-secondary">Cancel</a>
+    <button type="submit">Add User</button>
 </form>
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

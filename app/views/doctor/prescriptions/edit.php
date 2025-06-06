@@ -3,6 +3,7 @@
 <form action="<?= URL_ROOT ?>/doctor/edit-prescriptions/<?= $data['id'] ?>" method="POST">
 
     <input type="hidden" name="id" id="id" value="<?= $data['id'] ?>">
+    
     <div>
         <label for="record_id">Medical Record</label>
         <select name="record_id" id="record_id" required>
@@ -36,8 +37,9 @@
         <?php endif ?>
     </div>
 
+    <a href="<?= URL_ROOT ?>/doctor/prescriptions" class="btn btn-secondary">Cancel</a>
     <button type="submit">Update prescriptions</button>
-</form>
 
+</form>
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

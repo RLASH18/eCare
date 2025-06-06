@@ -32,6 +32,4 @@
     </table>
 </div>
 
-
-
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

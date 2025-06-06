@@ -3,6 +3,7 @@
 <form action="<?= URL_ROOT ?>/patient/edit-appointment/<?= $data['id'] ?>" method="POST">
 
     <input type="hidden" name="id" id="id" value="<?= $data['id'] ?>">
+    
     <div>
         <label for="doctors_name">Doctor's Name</label>
         <select name="doctor_id" id="" required>
@@ -25,8 +26,10 @@
         <label for="reason">Reason</label>
         <textarea name="reason" id="reason" required><?= htmlspecialchars($data['reason']) ?></textarea>
     </div>
-
+    
+    <a href="<?= URL_ROOT ?>/patient/appointments" class="btn btn-secondary">Cancel</a>
     <button type="submit">Update appointment</button>
+
 </form>
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

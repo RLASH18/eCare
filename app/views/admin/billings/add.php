@@ -1,6 +1,7 @@
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <form action="<?= URL_ROOT ?>/admin/add-billing" method="POST">
+    
     <div>
         <label for="doctors_name">Patient's Name</label>
         <select name="patient_id" id="" required>
@@ -44,8 +45,9 @@
         <?php endif ?>
     </div>
 
+    <a href="<?= URL_ROOT ?>/admin/billings" class="btn btn-secondary">Cancel</a>
     <button type="submit">Add billing</button>
-</form>
 
+</form>
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

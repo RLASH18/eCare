@@ -70,7 +70,8 @@
             <p><?= $data['role_err'] ?></p>
         <?php endif ?>
     </div>
-
+    
+    <a href="<?= URL_ROOT ?>/admin/user-management" class="btn btn-secondary">Cancel</a>
     <button type="submit">Update user</button>
 </form>
 

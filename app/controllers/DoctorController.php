@@ -233,15 +233,12 @@ class DoctorController extends Controller {
         else {
 
             $this->view('doctor/medical-records/delete', $data = [
-                'title' => 'Doctor - Edit-Record',
+                'title' => 'Doctor - Delete-Record',
                 'id' => $record['id'],
                 'patient_id' => $record['patient_id'],
                 'patient_name' => $record['patient_name'],
                 'diagnosis' => $record['diagnosis'],
                 'treatment' => $record['treatment'],
-                'patient_id_err' => '',
-                'diagnosis_err' => '',
-                'treatment_err' => ''
             ]);
         }
     }
@@ -409,17 +406,18 @@ class DoctorController extends Controller {
             header('Location: ' . URL_ROOT . '/doctor/prescriptions');
             exit;
         }
-        $this->view('doctor/prescriptions/delete', $data = [
-            'title' => 'Doctor - Delete-Prescriptions',
-            'id' => $prescriptions['id'],
-            'record_id' => $prescriptions['record_id'],
-            'patient_name' => $prescriptions['patient_name'],
-            'diagnosis' => $prescriptions['diagnosis'],
-            'medicine_name' => $prescriptions['medicine_name'],
-            'dosage' => $prescriptions['dosage'],
-            'record_id_err' => '',
-            'medicine_name_err' => '',
-            'dosage_err' => ''
-        ]);
+
+        else {
+
+            $this->view('doctor/prescriptions/delete', $data = [
+                'title' => 'Doctor - Delete-Prescriptions',
+                'id' => $prescriptions['id'],
+                'record_id' => $prescriptions['record_id'],
+                'patient_name' => $prescriptions['patient_name'],
+                'diagnosis' => $prescriptions['diagnosis'],
+                'medicine_name' => $prescriptions['medicine_name'],
+                'dosage' => $prescriptions['dosage']
+            ]);
+        }
     }
 }

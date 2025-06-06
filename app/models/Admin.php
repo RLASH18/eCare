@@ -275,6 +275,14 @@ class Admin {
         return $this->db->resultSet();
     }
 
+    public function getBillingById($id) {
+        $this->db->query("SELECT b.*, u.full_name AS patient_name FROM billing b JOIN users u ON b.patient_id = u.id
+                        WHERE b.id = :id");
+
+        $this->db->bind(':id', $id);
+        return $this->db->result();
+    }
+
     public function getAllPatients() {
         $this->db->query("SELECT id, full_name FROM users WHERE role = 'patient'");
         return $this->db->resultSet();
@@ -297,5 +305,93 @@ class Admin {
             return false;
         }
     }
+
+    public function editBilling($data) {
+        $this->db->query("UPDATE billing set patient_id = :patient_id, amount = :amount, status = :status, 
+                        description = :description WHERE id = :id AND status = 'unpaid'");
+
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':patient_id', $data['patient_id']);
+        $this->db->bind(':amount', $data['amount']);
+        $this->db->bind(':status', $data['status']);
+        $this->db->bind(':description', $data['description']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    public function deleteBilling($id) {
+        $this->db->query("DELETE FROM billing WHERE id = :id AND status = 'unpaid'");
+        $this->db->bind(':id', $id);
+
+        return $this->db->execute();
+    }
+    //-----------------------------------------------------------------------
+    
+    
+    //--------------------------Inventory Query------------------------------
+
+    public function getAllInventoryItems() {
+        $this->db->query("SELECT * FROM inventory");
+        return $this->db->resultSet();
+    }
+
+    public function getInventoryById($id) {
+        $this->db->query("SELECT * FROM inventory WHERE id = :id");
+        $this->db->bind(':id', $id);
+        
+        return $this->db->result();
+    }
+
+    public function addInventory($data) {
+        $this->db->query("INSERT INTO inventory (item_name, quantity, description) VALUES 
+                        (:item_name, :quantity, :description)");
+
+        $this->db->bind(':item_name', $data['item_name']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':description', $data['description']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    public function editInventory($data) {
+        $this->db->query("UPDATE inventory SET item_name = :item_name, quantity = :quantity, description = :description
+                        WHERE id = :id");
+        
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':item_name', $data['item_name']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':description', $data['description']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    public function deleteInventory($id) {
+        $this->db->query("DELETE FROM inventory WHERE id = :id");
+        
+        $this->db->bind(':id', $id);
+
+        return $this->db->execute();
+    }
+    //-----------------------------------------------------------------------
+
+
 
 }

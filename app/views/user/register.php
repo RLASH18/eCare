@@ -6,12 +6,14 @@
 
         <form action="<?= URL_ROOT ?>/user/register" method="POST">
             <div class="fields flex gap-5">
+
                 <div class="input-fields"> 
                     <input type="text" name="full_name" placeholder="Full name" required>
                     <?php if (!empty($data['full_name_err'])): ?>
                         <p><?= $data['full_name_err'] ?></p>
                     <?php endif ?>
                 </div>
+                
                 <div class="input-fields">
                     <input type="text" name="username" placeholder="Username" required>
                     <?php if (!empty($data['username_err'])): ?>
@@ -69,6 +71,7 @@
                 <a class="signIn-button w-48 text-center" href="<?= URL_ROOT ?>/user/login">Sign In</a>
             </div>
         </form>
+
         <div class="sign-in-message-container w-60 text-xs">
             <div class="sign-in-message">Already have an account? Login your account here.</div>
         </div>

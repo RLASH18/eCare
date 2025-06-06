@@ -1,6 +1,7 @@
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
 <h1>List of Users</h1>
+
 <a href="<?= URL_ROOT ?>/admin/add-user" class="inline-flex items-center">
     Add User
 </a>

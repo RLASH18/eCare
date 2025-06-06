@@ -19,12 +19,12 @@
         <tbody>
             <?php foreach ($data['billings'] as $billing) : ?>
                 <tr>
-                    <td><?= $billing['patient_name'] ?></td>
-                    <td><?= $billing['amount'] ?></td>
-                    <td><?= $billing['status'] ?></td>
-                    <td><?= $billing['description'] ?></td>
-                    <td><?= $billing['issued_date'] ?></td>
-                    <td>
+                    <td><?= htmlspecialchars($billing['patient_name']) ?></td>
+                    <td><?= htmlspecialchars(number_format($billing['amount'], 2)) ?></td>
+                    <td><?= htmlspecialchars($billing['status']) ?></td>
+                    <td><?= htmlspecialchars($billing['description']) ?></td>
+                    <td><?= htmlspecialchars(date('M d, Y', strtotime($billing['issued_date']))) ?></td>
+                    <td> 
                         <?php if ($billing['status'] === 'unpaid') : ?>
                             <a href="<?= URL_ROOT ?>/admin/edit-billing/<?= $billing['id'] ?>">Edit</a>
                             <a href="<?= URL_ROOT ?>/admin/delete-billing/<?= $billing['id'] ?>">Delete</a>

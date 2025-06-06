@@ -1,6 +1,5 @@
 <?php include APP_ROOT . '/views/inc/dashboard-header.php' ?>
 
-
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 mx-auto">
@@ -38,7 +37,7 @@
 
                     <form action="<?= URL_ROOT ?>/doctor/delete-prescriptions/<?= $data['id'] ?>" method="POST">
                         <div class="d-flex justify-content-between">
-                            <a href="<?= URL_ROOT ?>/doctor/medical-records" class="btn btn-secondary">Cancel</a>
+                            <a href="<?= URL_ROOT ?>/doctor/prescriptions" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-danger">Delete prescription</button>
                         </div>
                     </form>
@@ -47,6 +46,5 @@
         </div>
     </div>
 </div>
-
 
 <?php include APP_ROOT . '/views/inc/dashboard-footer.php' ?>

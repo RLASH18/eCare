@@ -12,7 +12,7 @@
                         <strong>Warning!</strong> Are you sure you want to delete this medical record? This action cannot be undone.
                     </div>
 
-                    <div class="user-details mb-4">
+                    <div class="medical-record-details mb-4">
                         <h5>Medical record details:</h5>
                         <table class="table">
                             <tr>

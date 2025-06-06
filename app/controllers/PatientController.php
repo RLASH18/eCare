@@ -96,6 +96,7 @@ class PatientController extends Controller {
     }
 
     public function editAppointment($id = null) {
+
         if($id === null) {
             header('Location: ' . URL_ROOT . '/patient/appointments');
             exit;
@@ -219,10 +220,7 @@ class PatientController extends Controller {
                 'doctor_id' => $appointment['doctor_id'],
                 'doctor_name' => $appointment['doctor_name'],
                 'scheduled_date' => $appointment['scheduled_date'],
-                'reason' => $appointment['reason'],
-                'doctor_id_err' => '',
-                'scheduled_date_err' => '',
-                'reason_err' => ''
+                'reason' => $appointment['reason']
             ]);
         }
     }
