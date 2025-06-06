@@ -1,11 +1,12 @@
 <?php include APP_ROOT . '/views/inc/header.php' ?>
 
 <div class="flex min-h-screen items-center justify-center">
-    <div class="form-container w-lg p-6">
-        <h1 class="text-center font-bold m-4 text-xl">Register</h1>
+    <div class="form-container">
+        <h1 class="text-center font-bold m-4 text-2xl">Register</h1>
+
         <form action="<?= URL_ROOT ?>/user/register" method="POST">
-            <div class="fields">
-                <div class="input-fields">
+            <div class="fields flex gap-5">
+                <div class="input-fields"> 
                     <input type="text" name="full_name" placeholder="Full name" required>
                     <?php if (!empty($data['full_name_err'])): ?>
                         <p><?= $data['full_name_err'] ?></p>
@@ -21,7 +22,7 @@
 
             <div class="fields">
                 <div class="input-fields">
-                    <input type="password" name="password"  required>
+                    <input type="password" name="password" placeholder="Password"  required>
                     <?php if (!empty($data['password_err'])): ?>
                         <p><?= $data['password_err'] ?></p>
                     <?php endif ?>
