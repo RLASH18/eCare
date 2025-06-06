@@ -158,6 +158,7 @@ class Admin {
         return $this->db->resultSet();
     }
 
+
     /** Kukunin ang specific appointment base sa ID
      * 
      *  JOIN explanation:
@@ -178,6 +179,7 @@ class Admin {
         return $this->db->result();
     }
 
+    
     public function editAppointment($data) {
         $this->db->query("UPDATE appointments SET doctor_id = :doctor_id, scheduled_date = :scheduled_date
                         WHERE id = :id AND status = 'pending'");
@@ -260,6 +262,40 @@ class Admin {
                         JOIN users doc ON m.doctor_id = doc.id");
 
         return $this->db->resultSet();
+    }
+    //-----------------------------------------------------------------------
+
+
+    //--------------------------Billing Query--------------------------------
+    
+    public function getAllBillings() {
+        $this->db->query("SELECT b.*, p.full_name AS patient_name FROM billing b JOIN users p 
+                        ON b.patient_id = p.id");
+
+        return $this->db->resultSet();
+    }
+
+    public function getAllPatients() {
+        $this->db->query("SELECT id, full_name FROM users WHERE role = 'patient'");
+        return $this->db->resultSet();
+    }
+
+    public function addBilling($data) {
+        $this->db->query("INSERT INTO billing (patient_id, amount, status, description) VALUES
+                        (:patient_id, :amount, :status, :description)");
+        
+        $this->db->bind(':patient_id', $data['patient_id']);
+        $this->db->bind(':amount', $data['amount']);
+        $this->db->bind(':status', $data['status']);
+        $this->db->bind(':description', $data['description']);
+
+        if($this->db->execute()) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
     }
 
 }

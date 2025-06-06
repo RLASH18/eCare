@@ -484,8 +484,6 @@ class AdminController extends Controller {
 
             if(!in_array($status, ['approved_by_admin', 'approved_by_doctor', 'rejected'])) {
                 FlashMessage::set('error', 'Invalid status value.'. 'alert alert-danger');
-                header('Location: ' . URL_ROOT . '/admin/appointments');
-                exit;
             }
 
             if($this->adminModel->updateAppointmentStatus($appointmentId, $status)) {
@@ -522,8 +520,86 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function billing() {
-        $this->view('admin/billing');
+    public function billings() {
+        $this->view('admin/billings', $data = [
+            'title' => 'Admin - Billings',
+            'billings' => $this->adminModel->getAllBillings(),
+        ]);
+    }
+
+    public function addBilling() {
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $data = [
+                'patient_id' => trim($_POST['patient_id']),
+                'amount' => trim($_POST['amount']),
+                'status' => $_POST['status'],
+                'description' => trim($_POST['description']),
+                'patient_id_err' => '',
+                'amount_err' => '',
+                'status_err' => '',
+                'description_err' => ''
+            ];
+
+            if(empty($data['patient_id'])) {
+                $data['patient_id_err'] = 'Please choose a patient';
+            }
+
+            if(empty($data['amount'])) {
+                $data['amount_err'] = 'Please enter the schedule';
+            }
+
+            if(empty($data['status'])) {
+                $data['status_err'] = 'Please enter the status';
+            }
+
+            if(empty($data['description'])) {
+                $data['description_err'] = 'Please enter a description';
+            }
+
+            if(empty($data['patient_id_err']) AND empty($data['amount_err']) AND empty($data['status_err']) AND empty($data['description_err'])) {
+
+                if($this->adminModel->addBilling($data)) {
+                    FlashMessage::set('success', 'Billing has been added successfully.', 'alert alert success');
+                }
+
+                else {
+                    FlashMessage::set('error', 'Something went wrong. Please try again.', 'alert alert-danger');
+                }
+
+                header('Location: ' . URL_ROOT . '/admin/billings');
+                exit;
+            }
+
+            else {
+                $this->view('admin/billings/add', $data);
+            }
+        }
+
+        else {
+            $this->view('admin/billings/add', $data = [
+                'title' => 'Admin - Add-Billing',
+                'patients' => $this->adminModel->getAllPatients(),
+                'patient_id_err' => '',
+                'amount_err' => '',
+                'status_err' => '',
+                'description_err' => ''
+            ]);
+        }
+
+    }
+
+    public function editBilling() {
+        $this->view('admin/billings/edit', $data = [
+            'title' => 'Admin - Edit-Billing',
+        ]);
+    }
+
+    public function deleteBilling() {
+        $this->view('admin/billings/delete', $data = [
+            'title' => 'Admin - Delete-Billing',
+        ]);
     }
 
     public function inventory() {

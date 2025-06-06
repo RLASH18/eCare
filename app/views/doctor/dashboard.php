@@ -7,7 +7,7 @@
 </div>
 
 <div class="card">
-    <h3>Total Patients</h3>
+    <h3>Total Appointments</h3>
     <h5><?= htmlspecialchars($data['totalAppointments']) ?></h5>
 </div>
 

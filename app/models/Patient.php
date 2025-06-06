@@ -9,12 +9,16 @@ class Patient {
 
     //--------------------------Dashboard Query------------------------------
     public function getTotalAppointments() {
-        $this->db->query("SELECT COUNT(*) AS total_appointments FROM appointments");
+        $this->db->query("SELECT COUNT(*) AS total_appointments FROM appointments WHERE patient_id = :patient_id");
+        $this->db->bind(':patient_id', $_SESSION['user_id']);
+        
         return $this->db->result()['total_appointments'];
     }
 
     public function getTotalBills() {
-        $this->db->query("SELECT COUNT(*) AS total_bills FROM billing");
+        $this->db->query("SELECT COUNT(*) AS total_bills FROM billing WHERE patient_id = :patient_id");
+        $this->db->bind(':patient_id', $_SESSION['user_id']);
+        
         return $this->db->result()['total_bills'];
     }
     //-----------------------------------------------------------------------
@@ -157,5 +161,18 @@ class Patient {
         return $this->db->resultSet();
     }
     //-----------------------------------------------------------------------
+
+
+    //--------------------------Billing Query--------------------------------
+
+    public function getAllBillings() {
+        $this->db->query("SELECT b.*, u.full_name AS patient_name FROM billing b JOIN users u ON b.patient_id = u.id 
+                        WHERE b.patient_id = :patient_id");
+
+        $this->db->bind(':patient_id', $_SESSION['user_id']);
+
+        return $this->db->resultSet();
+    }
+
 
 }

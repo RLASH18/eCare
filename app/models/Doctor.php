@@ -15,13 +15,12 @@ class Doctor {
     }
 
     public function getTotalAppointments() {
-        $this->db->query("SELECT COUNT(*) as total_appointment FROM appointments");
+        $this->db->query("SELECT COUNT(*) as total_appointment FROM appointments WHERE doctor_id = :doctor_id");
+        $this->db->bind(':doctor_id', $_SESSION['user_id']);
         return $this->db->result()['total_appointment'];
     }
     //-----------------------------------------------------------------------
 
-
-    
 
     //---------------------------Appointment Query---------------------------
     /** Kukunin ang lahat ng appointments ng doctor
@@ -214,6 +213,7 @@ class Doctor {
         }
     }
 
+
     /** I-update ang existing prescription
      * 
      *  JOIN explanation:
@@ -243,6 +243,7 @@ class Doctor {
         }
     }
 
+    
     /** Tanggalin ang prescription
      * 
      *  JOIN explanation:

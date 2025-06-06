@@ -45,8 +45,6 @@ class DoctorController extends Controller {
 
             if(!in_array($status, ['approved_by_admin', 'approved_by_doctor', 'rejected'])) {
                 FlashMessage::set('error', 'Invalid status value.'. 'alert alert-danger');
-                header('Location: ' . URL_ROOT . '/doctor/appointments');
-                exit;
             }
 
             if($this->doctorModel->updateAppointmentStatus($appointmentId, $status)) {

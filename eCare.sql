@@ -55,6 +55,7 @@ CREATE TABLE billing (
     patient_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     status ENUM('unpaid', 'paid') DEFAULT 'unpaid',
+    description VARCHAR(255) NOT NULL,
     issued_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES users(id) ON DELETE CASCADE
 );

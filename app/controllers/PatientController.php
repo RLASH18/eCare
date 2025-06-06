@@ -240,4 +240,11 @@ class PatientController extends Controller {
             'prescriptions' => $this->patientModel->getAllPrescriptions() 
         ]);
     }
+
+    public function billings() {
+        $this->view('patient/billings', $data = [
+            'title' => 'Patient - Billings',
+            'billings' => $this->patientModel->getAllBillings()
+        ]);
+    }
 }

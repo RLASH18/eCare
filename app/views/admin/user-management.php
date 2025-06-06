@@ -2,7 +2,7 @@
 
 <h1>List of Users</h1>
 <a href="<?= URL_ROOT ?>/admin/add-user" class="inline-flex items-center">
-    <i class="fas fa-plus mr-2"></i> Add Student
+    Add User
 </a>
 
 <div class="table">
