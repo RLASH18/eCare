@@ -266,10 +266,13 @@ aside .sidebar-left-lower {
 body.admin {
     display: grid;
     grid-template-columns: 14rem auto;
-    grid-template-rows: 40px auto;
+    grid-template-rows: 55px auto;
 }
 
+
+/* Header Section */
 header {
+    border-radius: 4px;
     grid-column-start: 2;
     grid-column-end: 3;
     background-color: skyblue;
@@ -282,6 +285,24 @@ header {
 
 .header-school-section {
     text-align: right;
+}
+
+.header-icon-container {
+    position: relative;
+    top: 10px;
+    left: 5px;
+    color: #045166;
+}
+
+.header-icon-container span {
+    position: relative;
+    top: 3px;
+}
+
+.school-name-container {
+    color: #045166;
+    padding-block: 5px;
+
 }
 
 

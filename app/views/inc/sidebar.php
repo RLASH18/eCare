@@ -1,6 +1,7 @@
 <aside>
     <div class="sidebar-left-logo">
         <h1 class="text-2xl">eCare</h1>
+        <img src="./assets/img/eCare-icon.png" style="width: 70px" alt="eCare icon">
     </div>
 
 

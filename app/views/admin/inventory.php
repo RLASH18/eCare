@@ -3,6 +3,7 @@
 <a href="<?= URL_ROOT ?>/admin/add-inventory">
     Add Inventory
 </a>
+<?php include APP_ROOT . '/views/inc/sidebar.php' ?>
 
 
 <div class="table">
