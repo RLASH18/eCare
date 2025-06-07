@@ -14,8 +14,6 @@
 <body class="admin">
 
     <!-- flash message -->
-    
-
     <?php include APP_ROOT . '/views/inc/flash-message.php' ?>
 
     <!-- sidebar -->
