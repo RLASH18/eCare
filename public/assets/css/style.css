@@ -236,11 +236,19 @@ aside .sidebar-left-options a {
     padding-left: 5px;
 }
 
+.side-link {
+    transition: background 1s, color 1s
+}
 
-aside .sidebar-left-options .side-link.active{
+.side-link.fade-out {
+    opacity: 0.5;
+    transition: background 1s;
+}
+
+
+aside .sidebar-left-options a.side-link.active{
     background-color: #007FA3;
     color: white;
-    transition: background-color 600ms ease, border-left 200ms ease;
     border-radius: 0 10px 10px 0;
     border-left: 5px solid rgb(106, 106, 241);
 

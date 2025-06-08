@@ -1,18 +1,31 @@
 
-// Function to handle click events on side links
-function setActiveLink(clickedLink) {
-      // Prevent default link behavior
-      event.preventDefault();
+// // Function to handle click events on side links
+// function setActiveLink(event, clickedLink) {
+//       // Prevent default link behavior
+//       event.preventDefault();
 
-      // Get all nav links
-      const links = document.querySelectorAll('.side-link');
+//       // Get all nav links
+//       const links = document.querySelectorAll('.side-link');
 
-      // Remove 'active' class from all
-      links.forEach(link => link.classList.remove('active'));
+//       // Remove 'active' class from all
+//       links.forEach(link => link.classList.remove('active'));
 
-      // Add 'active' to clicked one
-      clickedLink.classList.add('active');
-}
+//       // Add 'active' to clicked one
+//       clickedLink.classList.add('active');
+// }
+
+// document.querySelectorAll('.side-link[href]').forEach(link => {
+//     // Only apply to links that navigate (not #)
+//     if (link.getAttribute('href') !== '#') {
+//         link.addEventListener('click', function(e) {
+//             e.preventDefault();
+//             link.classList.add('fade-out');
+//             setTimeout(() => {
+//                 window.location = link.href;
+//             }, 180); // Match the CSS transition duration
+//         });
+//     }
+// });
 
 /**
  * kapag loaded na yung html tsaka lang mag r run yung javascript 
