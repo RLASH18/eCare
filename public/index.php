@@ -1,6 +1,6 @@
 <?php
 /**
- * Index File - Entry Point ng Application
+ * Bootstrap File - Entry Point ng Application
  * 
  * Ito ang pangunahing entry point ng application kung saan:
  * 1. Ina-load ang mga kinakailangang configuration files
